@@ -48,7 +48,7 @@ h3 { text-align: center; padding: 0.1em; margin: 0;}
 <meta name="viewport" content="width=device-width">
 <script>
 
-//https://modinikam.nikhemant.workers.dev/?d=सिद्धीप्रिया
+//https://modinikam.nikhemant.workers.dev/?d=देवनागरी
 async function BB_to_Modi(dtext){
 	let url = "https://modinikam.nikhemant.workers.dev/?d="
 	url = url + dtext.trim();
@@ -57,14 +57,14 @@ async function BB_to_Modi(dtext){
 	//console.log( val);
 		
 	//alert(val)
-	if(val.length < 2800)
+	if(val.length < 28)
 		document.getElementById("divoutputdiv").innerText = val;
 	else
 		alert("Please fill the google form to convert longer text. \nClick 'Want to convert longer text?' link on the page.")
 	//document.getElementById('txtenter').value = val;
 
 	fnCreateScreenShotForExport();
-	//fnPost(document.getElementById('txtBBtoModi').value, val.length);
+	fnPost(document.getElementById('txtBBtoModi').value, val.length);
 
 }
 
@@ -158,7 +158,7 @@ var info={
 
 </script>
 </head>
-<!-- Google tag (gtag.js) 
+<!-- Google tag (gtag.js) -->
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-FD4S6PDJ05"></script>
 <script>
   window.dataLayer = window.dataLayer || [];
@@ -166,7 +166,7 @@ var info={
   gtag('js', new Date());
 
   gtag('config', 'G-FD4S6PDJ05');
-</script>-->
+</script>
 <meta charset="utf-8" />
 
 <body>
