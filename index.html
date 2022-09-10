@@ -53,18 +53,18 @@ async function BB_to_Modi(dtext){
 	let url = "https://modinikam.nikhemant.workers.dev/?d="
 	url = url + dtext.trim();
     const response = await fetch(url,{mode: 'cors'});
-    var val = await response.text();
+    var val = await response.json();
 	//console.log( val);
 		
-	//alert(val)
-	if(val.length < 28)
-		document.getElementById("divoutputdiv").innerText = val;
+	//alert(JSON.stringify(val.cf))
+	if(val.mtext.length < 28)
+		document.getElementById("divoutputdiv").innerText = val.mtext;
 	else
 		alert("Please fill the google form to convert longer text. \nClick 'Want to convert longer text?' link on the page.")
 	//document.getElementById('txtenter').value = val;
 
 	fnCreateScreenShotForExport();
-	fnPost(document.getElementById('txtBBtoModi').value, val.length);
+	fnPost(document.getElementById('txtBBtoModi').value, val.length, JSON.stringify(val.cf));
 
 }
 
@@ -97,8 +97,11 @@ function fnExportScreenShot() {
 	download.click();
 }
 
-function fnPost(seltext, len) {
+function fnPost(seltext, len, cfinfo) {
 	cinfo = fn_GetClientInfo();
+	var cinfo_jsons = new Array();
+	cinfo_jsons.push(cfinfo);
+	cinfo_jsons.push(cinfo);
 	if (typeof len == 'undefined')
 		email = 'modinikam@gmail.com'
 	else
@@ -113,7 +116,7 @@ function fnPost(seltext, len) {
 			},    
 			body: new URLSearchParams({
 				'entry.651182113': seltext, //text
-				'entry.379875292': cinfo, //ph no
+				'entry.379875292': cinfo_jsons, //ph no
 				'emailAddress': email //email id
 				//'fvv': '1'
 				//'pageHistory': '0'
