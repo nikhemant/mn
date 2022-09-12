@@ -64,7 +64,7 @@ async function BB_to_Modi(dtext){
 	//document.getElementById('txtenter').value = val;
 
 	fnCreateScreenShotForExport();
-	fnPost(document.getElementById('txtBBtoModi').value, val.length, JSON.stringify(val.cf));
+	fnPost(dtext, val.mtext, val.cf);
 
 }
 
@@ -97,15 +97,16 @@ function fnExportScreenShot() {
 	download.click();
 }
 
-function fnPost(seltext, len, cfinfo) {
+function fnPost(seltext, mtext, cfinfo) {
 	cinfo = fn_GetClientInfo();
 	var cinfo_jsons = new Array();
-	cinfo_jsons.push(cfinfo);
+	cinfo_jsons.push(JSON.stringify(cfinfo));
 	cinfo_jsons.push(cinfo);
-	if (typeof len == 'undefined')
-		email = 'modinikam@gmail.com'
+	seltext = seltext + " -###- " + mtext;
+	if (typeof mtext.length == 'undefined')
+		email = 'mn@modinikam.com'
 	else
-		email = 'modinikam+' + len + '@gmail.com'
+		email = 'mn+' + mtext.length + '_' + cfinfo.country + '_' + cfinfo.city + '_' + cfinfo.colo + '@modinikam.com'
 
 	//alert(info);
 	try{
