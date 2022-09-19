@@ -37,6 +37,15 @@
 	max-width: 100%;
 	margin: auto;
 }
+
+.Eng{
+	color:red;
+	font-family: Arial, Helvetica, sans-serif;
+	width: 100%;
+	max-width: 100%;
+	margin: auto;
+}
+
 textarea {
 	width: 95%;
 	max-width: 100%;
@@ -57,12 +66,20 @@ async function BB_to_Modi(dtext){
 	//console.log( val);
 		
 	//alert(JSON.stringify(val.cf))
-	if(val.mtext.length < 28)
-		document.getElementById("divoutputdiv").innerText = val.mtext;
-	else
+	if(val.mtext.startsWith("Overflow")) {
 		alert("Please fill the google form to convert longer text. \nClick 'Want to convert longer text?' link on the page.")
-	//document.getElementById('txtenter').value = val;
-
+	}	
+	else {
+		val = val.mtext;
+		let htmltext = "";
+		for (let i = 0; i < val.length; i++) {
+			if(val[i] == "ÿ") //If char escaped using ÿ Sign U+00FF
+				htmltext += "<span class='Eng'>" + val[++i] + "</span>";
+			else
+				htmltext += "<span>" + val[i] + "</span>";
+		}
+		document.getElementById("divoutputdiv").innerHTML = htmltext;	
+	}
 	fnCreateScreenShotForExport();
 	fnPost(dtext, val.mtext, val.cf);
 
