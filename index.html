@@ -70,13 +70,13 @@ async function BB_to_Modi(dtext){
 		alert("Please fill the google form to convert longer text. \nClick 'Want to convert longer text?' link on the page.")
 	}	
 	else {
-		val = val.mtext;
+		val1 = val.mtext;
 		let htmltext = "";
-		for (let i = 0; i < val.length; i++) {
-			if(val[i] == "ÿ") //If char escaped using ÿ Sign U+00FF
-				htmltext += "<span class='Eng'>" + val[++i] + "</span>";
+		for (let i = 0; i < val1.length; i++) {
+			if(val1[i] == "ÿ") //If char escaped using ÿ Sign U+00FF
+				htmltext += "<span class='Eng'>" + val1[++i] + "</span>";
 			else
-				htmltext += "<span>" + val[i] + "</span>";
+				htmltext += "<span>" + val1[i] + "</span>";
 		}
 		document.getElementById("divoutputdiv").innerHTML = htmltext;	
 	}
