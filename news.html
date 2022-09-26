@@ -3,21 +3,21 @@
 <head>
 <!-- Primary Meta Tags -->
 <title>ModiNikam - Latest news in Modi Lipi</title>
-<meta name="title" content="ModiNikam - Convert Devnagari to Modi Lipi">
+<meta name="title" content="ModiNikam - Latest news in Modi Lipi">
 <meta name="description" content="Free online tool to convert any text from Marathi language in Devnagari/Balbodh script to Modi Lipi">
 <meta name="keywords" content="Modi Lipi, Modi Script, Convert to Modi Lipi, Convert to Modi Script, Devnagari to Modi Lipi, Marathi to Modi Lipi, Balbodh to Modi Lipi">
 
 <!-- Open Graph / Facebook -->
 <meta property="og:type" content="website">
 <meta property="og:url" content="https://modinikam.com/">
-<meta property="og:title" content="ModiNikam - Convert Devnagari to Modi Lipi">
+<meta property="og:title" content="ModiNikam - Latest news in Modi Lipi">
 <meta property="og:description" content="Free online tool to convert any text from Marathi language in Devnagari/Balbodh script to Modi Lipi">
 <meta property="og:image" content="https://modinikam.com/ModiNikam-Logo-tl.png">
 
 <!-- Twitter -->
 <meta property="twitter:card" content="summary_large_image">
 <meta property="twitter:url" content="https://modinikam.com/">
-<meta property="twitter:title" content="ModiNikam - Convert Devnagari to Modi Lipi">
+<meta property="twitter:title" content="ModiNikam - Latest news in Modi Lipi">
 <meta property="twitter:description" content="Free online tool to convert any text from Marathi language in Devnagari/Balbodh script to Modi Lipi">
 <meta property="twitter:image" content="https://modinikam.com/ModiNikam-Logo-tl.png">
 
@@ -70,7 +70,7 @@ window.onload = async function fnloadNews() {
 	//url = url + newsprovider.trim();
     const response = await fetch(url, {mode: 'cors'});	
 	var val = await response.text();
-
+	
 	document.getElementById('news-contents').innerHTML = val;
 	
 	var divs = document.getElementsByClassName("hidden Eng");
