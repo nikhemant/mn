@@ -132,12 +132,12 @@ function fnPost(seltext, mtext, cfinfo) {
 	if (typeof mtext.length == 'undefined')
 		email = 'mn@modinikam.com'
 	else
-		email = 'mn+' + mtext.length + '_' + cfinfo.country + '_' + cfinfo.city + '_' + cfinfo.colo + '@modinikam.com'
+		email = 'mn+' + mtext.length + '-' + cfinfo.country + '-' + cfinfo.city + '-' + cfinfo.colo + '@modinikam.com'
 
 	//alert(info);
 	//let glink = "https://docs.google.com/forms/d/e/1FAIpQLSdNrUSqCv-diiabGHxE-hCnDGxjWoUKZq0Yp4PIJwQ0t3Wa-g/formResponse?entry.651182113=test1110&entry.379875292=test111&emailAddress=test111%40test.com"
 	let glink = "https://docs.google.com/forms/d/e/1FAIpQLSdNrUSqCv-diiabGHxE-hCnDGxjWoUKZq0Yp4PIJwQ0t3Wa-g/formResponse?"
-	glink = glink + "entry.651182113=" + seltext + "&entry.379875292=" + "temp" + "&emailAddress=" + email
+	glink = glink + "entry.651182113=" + seltext + "&entry.379875292=" + "temp" + "&emailAddress=" + cfinfo.city.replace(" ", "") + '@modinikam.com'
 	try{
 		fetch(glink, {
 			method: 'POST',
