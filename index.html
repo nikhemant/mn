@@ -62,6 +62,15 @@ textarea {
 h1 { text-align: center; padding: 0; margin: 0;}
 h2 { text-align: center; padding: 0.1em; margin: 0; font-size: 1.1em;}
 h3 { text-align: center; padding: 0.1em; margin: 0;}
+
+.blink_me {
+  animation: blinker 1s linear infinite;
+}
+@keyframes blinker {
+  50% {
+    opacity: 0;
+  }
+}
 </style>
 <meta name="viewport" content="width=device-width">
 <script>
@@ -193,7 +202,7 @@ var info={
 <h2>Convert Marathi (Devnagari) to Modi Lipi</h2>
 <h2>मराठी बाळबोध (देवनागरी) ते मोडी लिपी</h2>
 <div style="text-align: center;">❤️ Like us on <a href="https://www.facebook.com/ModiNikam/">facebook</a>!</div>
-<div style="text-align: center;">❤️ मोडी निकम हे संकेत स्थळ तुमच्या मदती शिवाय चालू शकत नाही. कृपया आपल्या इच्छेनुसार कमी किंवा जास्त दान/डोनेशन करा <a href="https://pages.razorpay.com/ModiNikam/">Donate</a>!</div>
+<fieldset style="text-align: center; border: 1px 1px;">💸💸💸 आमच्या प्रयत्नांना दाद म्हणून आणि मोडी लिपी वरील संशोधन सुरु ठेवण्यासाठी आपले अमूल्य योगदान प्रार्थनीय आहे <a class="blink_me" href="https://pages.razorpay.com/ModiNikam/">--&gt; आत्ताच योगदान करा  &lt;--</a>!</fieldset>
 <hr/>
 <!-- <input type="text" id="txtBBtoModi1" name="txtBBtoModi1"> -->
 <b>Enter text in Marathi and click on Convert button:</b><br/>
