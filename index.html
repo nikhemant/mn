@@ -35,7 +35,7 @@
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
 <script src="https://unpkg.com/merge-images"></script>
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/water.css@2/out/water.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/water.css@2/out/light.css">
 
 <style>
 @font-face {
@@ -170,12 +170,14 @@ async function fnExportScreenShotasStatus() {
 		{ src: 'mnstatustemplate.png', x: 0, y: 0 }, //432 x 768 portrait status image
 		{ src: mlcanvas.toDataURL(), x: 12, y: 150, opacity: 1.0  },
 		{ src: dncanvas.toDataURL(), x: 24, y: 420 }
-	])
+	], {
+		width: 432,  height: 768
+	})
 	.then(b64 => document.getElementById('imgStatus').src = b64); 
 
 	var download = document.createElement('a');
 	download.href = document.getElementById('imgStatus').src;
-	download.download = 'status.png';
+	download.download = 'ModiNikam_status.png';
 	download.click();
 }
 
@@ -265,12 +267,12 @@ var info={
 <div id="divsourcetext" class="outputdiv" hidden></div>
 <hr/>
 <input type="button" value="Export as Image >>" class="" onclick="fnExportScreenShot(this)"/>
-<input type="button" value="Export as Status >>" class="" onclick="fnExportScreenShotasStatus(this)"/>
+<input type="button" value="Export as Status >>" class="" onclick="fnExportScreenShotasStatus(this)" style="display: none;" />
 
 <img id="imgStatus" hidden/>
 
 <h2><u><a href="https://modinikam.com/news.html" title="Latest news in Modi Lipi">📰 ताज्या ठळक बातम्या मोडी लिपी मधे 📰</a></u></h2>
-<p style="text-align: center; font-size:0.7em;">जय हिंद जय महाराष्ट्र<br/>&copy; 2023 ModiNikam. All Rights Reserved.<br/>
+<p style="text-align: center; font-size:0.7em;">जय हिंद जय महाराष्ट्र<br/>&copy; 2024 ModiNikam. All Rights Reserved.<br/>
 email: modinikam@gmail.com</p>
 
 
