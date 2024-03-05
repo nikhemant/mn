@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
+<meta charset="utf-8" />
 <!-- Primary Meta Tags -->
 <title>ModiNikam - Latest news in Modi Lipi</title>
 <meta name="title" content="ModiNikam - Latest news in Modi Lipi">
@@ -66,12 +67,19 @@ table.center {
 
 window.onload = async function fnloadNews() {
 	
-	let url = "https://modinikam-news-rssfeed.nikhemant.workers.dev/HT-Marathi-News"
+	let url = "https://modinikam-news-rssfeed.nikhemant.workers.dev/HT-Marathi-News-JSON"
 	//url = url + newsprovider.trim();
     const response = await fetch(url, {mode: 'cors'});	
 	var val = await response.text();
-	
-	document.getElementById('news-contents').innerHTML = val;
+	const jsonData = JSON.parse(val);
+	let htmltext = "";
+	for (let i = 0; i < jsonData.length; i++) {
+      let newsArticle = jsonData[i];
+	  htmltext += "<div><img src='"+ newsArticle.image +"' width='150'/><br><a target='_blank' href='" + newsArticle.link + "'>" + fnParse_mtext(newsArticle.title_ml) + "</a><br/>" + fnParse_mtext(newsArticle.description_ml) + "</div>"
+	  htmltext += "<div class='hidden Eng'>" + newsArticle.title.replace(/"/g,"'") + "</div><div class='hidden Eng'>" + newsArticle.description.replace(/"/g,"'") + "</div><div class='hidden Eng'>" + newsArticle.pubDate + "</div><br/>"
+	}
+
+	document.getElementById('news-contents').innerHTML = htmltext;
 	
 	var divs = document.getElementsByClassName("hidden Eng");
 	var toogledisplay = 0;
@@ -90,6 +98,17 @@ window.onload = async function fnloadNews() {
 	document.getElementById('Toggle').onclick = toggle;
 }
 
+function fnParse_mtext(val) {
+	let htmltext = "";
+
+	for (let i = 0; i < val.length; i++) {
+		if(val[i] == "ÿ") //If char escaped using ÿ Sign U+00FF
+			htmltext += "<span class='Eng'>" + val[++i] + "</span>";
+		else
+			htmltext += "<span>" + val[i] + "</span>";
+	}
+	return(htmltext);
+}
 </script>
 </head>
 <!-- Google tag (gtag.js) -->
@@ -101,7 +120,6 @@ window.onload = async function fnloadNews() {
 
   gtag('config', 'G-FD4S6PDJ05');
 </script>
-<meta charset="utf-8" />
 
 <body>
 <table class="center">
