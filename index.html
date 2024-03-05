@@ -16,6 +16,7 @@
 <meta name="title" content="ModiNikam - Convert Devnagari to Modi Lipi">
 <meta name="description" content="Free online tool to convert any text from Marathi language in Devnagari/Balbodh script to Modi Lipi">
 <meta name="keywords" content="Modi Lipi, Modi Script, Convert to Modi Lipi, Convert to Modi Script, Devnagari to Modi Lipi, Marathi to Modi Lipi, Balbodh to Modi Lipi">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 <!-- Open Graph / Facebook -->
 <meta property="og:type" content="website">
@@ -123,13 +124,15 @@ function fntype(e){
 //alert(e.value);
 text = document.getElementById('txtBBtoModi').value;
 var val = "";
-val = BB_to_Modi(text)
+if(text == "") { alert("Please enter Devnagari/Marathi text -> convert to Modi -> and then click Export.") }
+else { val = BB_to_Modi(text) }
 }
 
 function fnCreateScreenShotForExport() {
 	if(document.getElementById('mlcanvas')) //modilipi canvas
 		document.body.removeChild(document.getElementById('mlcanvas'))
 
+	document.querySelector("#divoutputdiv").hidden = false; //because hidden div is not converted to canvas
 	if(document.querySelector("#divoutputdiv").innerText != "")
 		html2canvas(document.querySelector("#divoutputdiv")).then(canvas => {
 			canvas.id = "mlcanvas"
@@ -163,6 +166,7 @@ function fnExportScreenShot() {
 
 
 async function fnExportScreenShotasStatus() {
+	if(!document.getElementById('mlcanvas')) alert("Please enter text -> convert to Modi -> and then click Export.")
 	var mlcanvas = document.getElementById("mlcanvas")
 	var dncanvas = document.getElementById("dncanvas")
 
@@ -264,11 +268,12 @@ var info={
 
 
 <body>
-<h1>
-<img src="ModiNikam-Logo-tl.png" title="ModiNikam" alt="ModiNikam - Convert Devnagari to Modi Lipi" width="160" height="120"/></h1>
-<h2>Convert Marathi (Devnagari) to Modi Lipi</h2>
-<h2>मराठी बाळबोध (देवनागरी) ते मोडी लिपी</h2>
-<div style="text-align: center;">❤️ Like us on <a href="https://www.facebook.com/ModiNikam/">facebook</a>!</div>
+<div class="row" style="display: flex;">
+<div><img style="margin-top: 1em;" src="ModiNikam-Logo-tl.png" title="ModiNikam" alt="ModiNikam - Convert Devnagari to Modi Lipi" width="160" height="120"/></div>
+<div><h2 style="margin: 1em;">Marathi (Devnagari) to Modi Lipi - मराठी बाळबोध (देवनागरी) ते मोडी लिपी</h2>
+	<div style="text-align: center;">❤️ Like us on <a href="https://www.facebook.com/ModiNikam/">facebook</a>!</div>
+</div>
+</div>
 <fieldset style="text-align: center; border: 1px 1px;">💸💸💸 आमच्या प्रयत्नांना दाद म्हणून आणि मोडी लिपी वरील संशोधन सुरु ठेवण्यासाठी आपले अमूल्य योगदान प्रार्थनीय आहे <a class="blink_me" href="https://pages.razorpay.com/ModiNikam/">--&gt; योगदान करा!  &lt;--</a></fieldset>
 <hr/>
 <!-- <input type="text" id="txtBBtoModi1" name="txtBBtoModi1"> -->
@@ -279,7 +284,7 @@ var info={
 <!--<input type="button" value="Clear" onclick="fnClr()"/> -->
 <br/>
 <hr/>
-<div id="divoutputdiv" class="ModiLipi outputdiv">
+<div id="divoutputdiv" class="ModiLipi outputdiv" hidden>
 	<div style="font-size: 7px; color: gray; position:absolute; bottom:0px;" class="Eng">ModiNikam.com</div>
 </div>
 <div id="divsourcetext" class="outputdiv" hidden></div>
