@@ -61,8 +61,22 @@ table.center {
   margin-left: auto; 
   margin-right: auto;
 }
+
+.column{
+	display: flex; border: 1px solid; padding: 2%; margin: 2% 0; box-shadow: 3px 5px 3px 3px #888888;
+}
+.column .img {
+	width: 100%; height:100%;
+}
+.column .content {
+	padding: 0 5%; width: 210%;
+}
+@media(max-width:600px) {
+  .column {
+    flex-flow: row wrap;
+  }
+} 
 </style>
-<meta name="viewport" content="width=device-width">
 
 <script>
 
@@ -73,20 +87,61 @@ window.onload = async function fnloadNews() {
     const response = await fetch(url, {mode: 'cors'});	
 	var val = await response.text();
 	const jsonData = JSON.parse(val);
-	let htmltext = "";
+	let htmltext = "", temphtmltext = "";
+	let htmltemplate = `
+		<div class="column">
+			<div class="img"><img src="##image##"></div>
+
+			<div class="content">
+				<span  class="ModiLipi">
+					<a target="_blank" href="##link##">
+						&#x1F855;&#x1F517;
+						##title_ml##
+					</a>
+					<br>
+					##description_ml##
+				</span>	<br/>
+				<span style="font-size: smaller;">on ##pubDate## - </span>
+				<a href="#!" style="font-size: smaller;" class="toogle">👉 देवनागरी मधेही वाचा</a>
+				<span class="hidden Eng">
+					<hr/>
+					##title##<br/>
+					##description##
+				</span>
+			</div>
+		</div>
+		`;
+
+
 	for (let i = 0; i < jsonData.length; i++) {
       let newsArticle = jsonData[i];
 	  newsArticle.title_ml = newsArticle.title_ml.replaceAll("˂ÿp˃","");
 	  newsArticle.description_ml = newsArticle.description_ml.replaceAll("˂ÿp˃","");  
-	  newsArticle.description_ml = newsArticle.description_ml.replaceAll("ÿaÿmÿpʴ","");
+	  newsArticle.description_ml = newsArticle.description_ml.replaceAll("ÿaÿmÿpʴ",""); //&nbsp;
 	  newsArticle.description_ml = newsArticle.description_ml.replaceAll("ÿnÿbÿsÿpʴ","");
 	  newsArticle.description = newsArticle.description.replaceAll("&amp;nbsp;"," ");
-	  htmltext += "<div><img src='"+ newsArticle.image +"' width='150'/><br><a target='_blank' href='" + newsArticle.link + "'>" + fnParse_mtext(newsArticle.title_ml) + "</a><br/>" + fnParse_mtext(newsArticle.description_ml) + "</div>"
-	  htmltext += "<div class='hidden Eng'>" + newsArticle.title.replace(/"/g,"'") + "</div><div class='hidden Eng'>" + newsArticle.description.replace(/"/g,"'") + "</div><div class='hidden Eng'>" + newsArticle.pubDate + "</div><br/>"
+	  temphtmltext = htmltemplate;
+	  temphtmltext = temphtmltext.replace("##title_ml##", fnParse_mtext(newsArticle.title_ml)).replace("##description_ml##", fnParse_mtext(newsArticle.description_ml)).replace("##title##", newsArticle.title).replace("##description##", newsArticle.description).replace("##image##", newsArticle.image).replace("##pubDate##", newsArticle.pubDate);
+	  htmltext += temphtmltext;
 	}
 
 	document.getElementById('news-contents').innerHTML = htmltext;
 	
+	var coll = document.getElementsByClassName("toogle");
+	var i;
+	for (i = 0; i < coll.length; i++) {
+	coll[i].addEventListener("click", function() {
+		var content = this.nextElementSibling;
+		//var content = this.querySelector(".content");
+		if (content.style.display == 'none' || content.style.display == ''){
+		content.style.display = "block";
+		} else {
+		content.style.display = 'none';
+		} 
+	});
+	}
+
+
 	var divs = document.getElementsByClassName("hidden Eng");
 	var toogledisplay = 0;
 	var toggle = function() {    
@@ -100,7 +155,6 @@ window.onload = async function fnloadNews() {
 				divs[i].style.display = 'none'
 		}
 	}
-
 	document.getElementById('Toggle').onclick = toggle;
 }
 
@@ -147,11 +201,11 @@ function fnParse_mtext(val) {
 
 <hr/>
 
-<h2><u> <a href="#news" title="Latest news in Modi Lipi">📰 ताज्या ठळक बातम्या मोडी लिपी मधे 📰</a></u></h2>
+<h2><u> <a href="#!" title="Latest news in Modi Lipi">📰 ताज्या ठळक बातम्या मोडी लिपी मधे 📰</a></u></h2>
 <h2><a id="Toggle" href="#">👉 देवनागरी मधेही वाचा  👈</a></h2>
 
 <br/>
-<div id="news-contents" class="ModiLipi" style="font-size: 0.8em; line-height: 150%; text-align:center;" title="Latest news in Modi Lipi">
+<div id="news-contents" style="font-size: 0.8em; line-height: 150%; width: 100%;" title="Latest news in Modi Lipi">
 
 </div>
 <div style="text-align: center; font-size: 0.5em;">News feed from: https://marathi.hindustantimes.com/</div>
