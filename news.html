@@ -121,7 +121,7 @@ window.onload = async function fnloadNews() {
 	  newsArticle.description_ml = newsArticle.description_ml.replaceAll("ÿnÿbÿsÿpʴ","");
 	  newsArticle.description = newsArticle.description.replaceAll("&amp;nbsp;"," ");
 	  temphtmltext = htmltemplate;
-	  temphtmltext = temphtmltext.replace("##title_ml##", fnParse_mtext(newsArticle.title_ml)).replace("##description_ml##", fnParse_mtext(newsArticle.description_ml)).replace("##title##", newsArticle.title).replace("##description##", newsArticle.description).replace("##image##", newsArticle.image).replace("##pubDate##", newsArticle.pubDate);
+	  temphtmltext = temphtmltext.replace("##link##", newsArticle.link).replace("##title_ml##", fnParse_mtext(newsArticle.title_ml)).replace("##description_ml##", fnParse_mtext(newsArticle.description_ml)).replace("##title##", newsArticle.title).replace("##description##", newsArticle.description).replace("##image##", newsArticle.image).replace("##pubDate##", newsArticle.pubDate);
 	  htmltext += temphtmltext;
 	}
 
@@ -204,7 +204,6 @@ function fnParse_mtext(val) {
 <h2><u> <a href="#!" title="Latest news in Modi Lipi">📰 ताज्या ठळक बातम्या मोडी लिपी मधे 📰</a></u></h2>
 <h2><a id="Toggle" href="#">👉 देवनागरी मधेही वाचा  👈</a></h2>
 
-<br/>
 <div id="news-contents" style="font-size: 0.8em; line-height: 150%; width: 100%;" title="Latest news in Modi Lipi">
 
 </div>
