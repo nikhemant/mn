@@ -7,6 +7,7 @@
 <meta name="title" content="ModiNikam - Latest news in Modi Lipi">
 <meta name="description" content="Free online tool to convert any text from Marathi language in Devnagari/Balbodh script to Modi Lipi">
 <meta name="keywords" content="Modi Lipi, Modi Script, Convert to Modi Lipi, Convert to Modi Script, Devnagari to Modi Lipi, Marathi to Modi Lipi, Balbodh to Modi Lipi">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 <!-- Open Graph / Facebook -->
 <meta property="og:type" content="website">
@@ -24,7 +25,7 @@
 
 <link rel="icon" type="image/png" sizes="32x32" href="favicon-32x32.png">
 
-<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/water.css@2/out/light.css">
 
 <style>
 @font-face {
@@ -75,6 +76,11 @@ window.onload = async function fnloadNews() {
 	let htmltext = "";
 	for (let i = 0; i < jsonData.length; i++) {
       let newsArticle = jsonData[i];
+	  newsArticle.title_ml = newsArticle.title_ml.replaceAll("˂ÿp˃","");
+	  newsArticle.description_ml = newsArticle.description_ml.replaceAll("˂ÿp˃","");  
+	  newsArticle.description_ml = newsArticle.description_ml.replaceAll("ÿaÿmÿpʴ","");
+	  newsArticle.description_ml = newsArticle.description_ml.replaceAll("ÿnÿbÿsÿpʴ","");
+	  newsArticle.description = newsArticle.description.replaceAll("&amp;nbsp;"," ");
 	  htmltext += "<div><img src='"+ newsArticle.image +"' width='150'/><br><a target='_blank' href='" + newsArticle.link + "'>" + fnParse_mtext(newsArticle.title_ml) + "</a><br/>" + fnParse_mtext(newsArticle.description_ml) + "</div>"
 	  htmltext += "<div class='hidden Eng'>" + newsArticle.title.replace(/"/g,"'") + "</div><div class='hidden Eng'>" + newsArticle.description.replace(/"/g,"'") + "</div><div class='hidden Eng'>" + newsArticle.pubDate + "</div><br/>"
 	}
