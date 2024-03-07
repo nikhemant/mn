@@ -26,6 +26,7 @@
 <link rel="icon" type="image/png" sizes="32x32" href="favicon-32x32.png">
 
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/water.css@2/out/light.css">
+<script src="dom-to-image.min.js" ></script>
 
 <style>
 @font-face {
@@ -108,6 +109,7 @@ window.onload = async function fnloadNews() {
 					##title##<br/>
 					##description##
 				</span>
+				<br/><a id="linkexport" href="#!" onclick=fnexportnews(this)>Export as Whatsapp Status >></a>
 			</div>
 		</div>
 		`;
@@ -168,6 +170,32 @@ function fnParse_mtext(val) {
 			htmltext += "<span>" + val[i] + "</span>";
 	}
 	return(htmltext);
+}
+
+async function fnexportnews(e) {
+	var elemsource = e.parentNode.parentNode.cloneNode(true);
+	//elem.getElementsByTagName('a')[1].innerText = 'ModiNikam.com'
+	elemsource.getElementsByTagName('a')[2].innerText = 'ModiNikam.com'
+	//elemsource.getElementsByClassName("toogle")[0].nextElementSibling.style.display = "block";
+
+	var newFirstElement = document.createElement('h2'); //element which should be first in E
+	newFirstElement.innerText="ModiNikam.com - बातम्या मोडी लिपी मधे";
+	//elem.insertBefore(newFirstElement, elem.firstChild);
+
+	var elem = document.createElement('div');
+	elem.appendChild(newFirstElement);
+	elem.appendChild(elemsource);
+	elem.getElementsByClassName("toogle")[0].nextElementSibling.style.display = "block";
+
+	document.body.appendChild(elem);
+	await domtoimage.toJpeg(elem, { quality: 0.95, bgcolor: 'white' })
+			.then(function (dataUrl) {
+				var link = document.createElement('a');
+				link.download = 'ModiNikam-news.jpeg';
+				link.href = dataUrl;
+				link.click();
+			});
+	document.body.removeChild(elem);
 }
 </script>
 </head>
