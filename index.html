@@ -86,6 +86,14 @@ h3 { text-align: center; padding: 0.1em; margin: 0;}
     opacity: 0;
   }
 }
+
+.row {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+}
+
 </style>
 <meta name="viewport" content="width=device-width">
 <script>
@@ -268,13 +276,13 @@ var info={
 
 
 <body>
-<div class="row" style="display: flex;">
-<div><img style="margin-top: 1em;" src="ModiNikam-Logo-tl.png" title="ModiNikam" alt="ModiNikam - Convert Devnagari to Modi Lipi" width="160" height="120"/></div>
+<div style="display: flex;">
+<div><img style="margin-top: 1em;" src="ModiNikam-Logo-tl.png" title="ModiNikam" alt="ModiNikam - Convert Devnagari to Modi Lipi" width="137" height="120"/></div>
 <div><h2 style="margin: 1em;">Marathi (Devnagari) to Modi Lipi - मराठी बाळबोध (देवनागरी) ते मोडी लिपी</h2>
 	<div style="text-align: center;">❤️ Like us on <a href="https://www.facebook.com/ModiNikam/">facebook</a>!</div>
 </div>
 </div>
-<fieldset style="text-align: center; border: 1px 1px;">💸💸💸 आमच्या प्रयत्नांना दाद म्हणून आणि मोडी लिपी वरील संशोधन सुरु ठेवण्यासाठी आपले अमूल्य योगदान प्रार्थनीय आहे <a class="blink_me" href="https://pages.razorpay.com/ModiNikam/">--&gt; योगदान करा!  &lt;--</a></fieldset>
+	<h2><u><a class="blink_me" href="https://modinikam.com/news.html" title="Latest news in Modi Lipi">📰 वाचा ताज्या ठळक बातम्या मोडी लिपी मधे 📰</a></u></h2>
 <hr/>
 <!-- <input type="text" id="txtBBtoModi1" name="txtBBtoModi1"> -->
 <b>Enter text in Marathi and click on Convert button:</b><br/>
@@ -290,12 +298,14 @@ var info={
 <div id="divsourcetext" class="outputdiv" hidden></div>
 <hr/>
 <input type="button" value="Export as Image >>" class="" onclick="fnExportScreenShot(this)"/>
-<input type="button" value="Export as Status >>" class="" onclick="fnExportScreenShotasStatus(this)"/>
+<input type="button" value="Export as Whatsapp Status >>" class="" onclick="fnExportScreenShotasStatus(this)"/>
 
 <img id="imgStatus" hidden/>
 <img id="imgStatusTemplate" src="mnstatustemplate.png" hidden/>
 
-<h2><u><a href="https://modinikam.com/news.html" title="Latest news in Modi Lipi">📰 ताज्या ठळक बातम्या मोडी लिपी मधे 📰</a></u></h2>
+<br>
+<fieldset style="text-align: center; border: 1px 1px;">💸💸💸 आमच्या प्रयत्नांना दाद म्हणून आणि मोडी लिपी वरील संशोधन सुरु ठेवण्यासाठी आपले अमूल्य योगदान प्रार्थनीय आहे <a class="blink_me" href="https://pages.razorpay.com/ModiNikam/">--&gt; योगदान करा!  &lt;--</a></fieldset>
+
 <p style="text-align: center; font-size:0.7em;">जय हिंद जय महाराष्ट्र<br/>&copy; 2024 ModiNikam. All Rights Reserved.<br/>
 email: modinikam@gmail.com</p>
 

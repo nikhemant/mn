@@ -58,6 +58,16 @@ textarea {
 h1 { text-align: center; padding: 0; margin: 0;}
 h2 { text-align: center; padding: 0.1em; margin: 0; font-size: 1.1em;}
 h3 { text-align: center; padding: 0.1em; margin: 0;}
+
+.blink_me {
+  animation: blinker 0.6s linear infinite;
+}
+@keyframes blinker {
+  50% {
+    opacity: 0.2;
+  }
+}
+
 table.center {
   margin-left: auto; 
   margin-right: auto;
@@ -103,13 +113,13 @@ window.onload = async function fnloadNews() {
 					##description_ml##
 				</span>	<br/>
 				<span style="font-size: smaller;">on ##pubDate## - </span>
-				<a href="#!" style="font-size: smaller;" class="toogle">👉 देवनागरी मधेही वाचा</a>
+				<a href="#!" style="font-size: smaller;" class="toogle">👉 देवनागरी मधेही वाचा 👈</a>
 				<span class="hidden Eng">
 					<hr/>
 					##title##<br/>
 					##description##
 				</span>
-				<br/><a id="linkexport" href="#!" onclick=fnexportnews(this)>Export as Whatsapp Status >></a>
+				<br/><a id="linkexport" class="blink_me" href="#!" onclick=fnexportnews(this)>Export as Whatsapp Status >></a>
 			</div>
 		</div>
 		`;
