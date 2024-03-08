@@ -112,9 +112,9 @@ window.onload = async function fnloadNews() {
 					<br>
 					##description_ml##
 				</span>	<br/>
-				<span style="font-size: smaller;">on ##pubDate## - </span>
-				<a href="#!" style="font-size: smaller;" class="toogle">👉 देवनागरी मधेही वाचा 👈</a>
-				<span class="hidden Eng">
+				<span style="font-size: smaller;">on ##pubDate##</span>
+				<a href="#!" style="font-size: smaller;" class="toogle hidden"> collapse [-]</a>
+				<span class="Eng">
 					<hr/>
 					##title##<br/>
 					##description##
@@ -132,24 +132,27 @@ window.onload = async function fnloadNews() {
 	  newsArticle.description_ml = newsArticle.description_ml.replaceAll("ÿaÿmÿpʴ",""); //&nbsp;
 	  newsArticle.description_ml = newsArticle.description_ml.replaceAll("ÿnÿbÿsÿpʴ","");
 	  newsArticle.description = newsArticle.description.replaceAll("&amp;nbsp;"," ");
+	  newsArticle.link = newsArticle.link + "?utm_source=ModiNikam&utm_medium=rss&utm_campaign=ModiLipi";
 	  temphtmltext = htmltemplate;
 	  temphtmltext = temphtmltext.replace("##link##", newsArticle.link).replace("##title_ml##", fnParse_mtext(newsArticle.title_ml)).replace("##description_ml##", fnParse_mtext(newsArticle.description_ml)).replace("##title##", newsArticle.title).replace("##description##", newsArticle.description).replace("##image##", newsArticle.image).replace("##pubDate##", newsArticle.pubDate);
 	  htmltext += temphtmltext;
 	}
 
 	document.getElementById('news-contents').innerHTML = htmltext;
-	
+	/*
 	var coll = document.getElementsByClassName("toogle");
 	var i;
 	for (i = 0; i < coll.length; i++) {
 	coll[i].addEventListener("click", function() {
 		var content = this.nextElementSibling;
 		//var content = this.querySelector(".content");
-		if (content.style.display == 'none' || content.style.display == ''){
-		content.style.display = "block";
+		if (content.style.display == "block" || content.style.display == '') {
+			content.style.display = 'none';
+			this.innerText="expand [+]";
 		} else {
-		content.style.display = 'none';
-		} 
+			content.style.display = "block";
+			this.innerText="collapse [-]";
+		}
 	});
 	}
 
@@ -168,6 +171,7 @@ window.onload = async function fnloadNews() {
 		}
 	}
 	document.getElementById('Toggle').onclick = toggle;
+*/	
 }
 
 function fnParse_mtext(val) {
@@ -184,7 +188,7 @@ function fnParse_mtext(val) {
 
 async function fnexportnews(e) {
 	var elemsource = e.parentNode.parentNode.cloneNode(true);
-	//elem.getElementsByTagName('a')[1].innerText = 'ModiNikam.com'
+	//elemsource.getElementsByTagName('a')[1].innerText = 'ModiNikam.com'
 	elemsource.getElementsByTagName('a')[2].innerText = 'ModiNikam.com'
 	//elemsource.getElementsByClassName("toogle")[0].nextElementSibling.style.display = "block";
 
@@ -239,8 +243,9 @@ async function fnexportnews(e) {
 
 <hr/>
 
-<h2><u> <a href="#!" title="Latest news in Modi Lipi">📰 ताज्या ठळक बातम्या मोडी लिपी मधे 📰</a></u></h2>
-<h2><a id="Toggle" href="#">👉 देवनागरी मधेही वाचा  👈</a></h2>
+<h2><u>📰 ताज्या ठळक बातम्या मोडी लिपी मधे 📰</u></h2>
+<h2>Click Export - व्हॉट्सॲप वर शेअर करा</h2>
+<!-- <h2><a id="Toggle" href="#">👉 देवनागरी मधेही वाचा  👈</a></h2> -->
 
 <div id="news-contents" style="font-size: 0.8em; line-height: 150%; width: 100%;" title="Latest news in Modi Lipi">
 
