@@ -2,6 +2,17 @@
 <html>
 <head>
 <meta charset="utf-8" />
+
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-FD4S6PDJ05"></script>
+<script>
+	window.dataLayer = window.dataLayer || [];
+	function gtag(){dataLayer.push(arguments);}
+	gtag('js', new Date());
+
+	gtag('config', 'G-FD4S6PDJ05');
+</script>
+
 <!-- Primary Meta Tags -->
 <title>ModiNikam - Latest news in Modi Lipi</title>
 <meta name="title" content="ModiNikam - Latest news in Modi Lipi">
@@ -26,7 +37,8 @@
 <link rel="icon" type="image/png" sizes="32x32" href="favicon-32x32.png">
 
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/water.css@2/out/light.css">
-<script src="dom-to-image.min.js" ></script>
+<!-- https://github.com/tsayen/dom-to-image -->
+<script src="js/dom-to-image.min.js" ></script>
 
 <style>
 @font-face {
@@ -61,6 +73,8 @@ h3 { text-align: center; padding: 0.1em; margin: 0;}
 
 .blink_me {
   animation: blinker 0.6s linear infinite;
+  padding: 3px;
+  border: 1px solid black;
 }
 @keyframes blinker {
   50% {
@@ -116,10 +130,14 @@ window.onload = async function fnloadNews() {
 				<a href="#!" style="font-size: smaller;" class="toogle hidden"> collapse [-]</a>
 				<span class="Eng">
 					<hr/>
-					##title##<br/>
+					<a target="_blank" href="##linkk##">
+						&#x1F855;&#x1F517;
+						##title##
+					</a>
+					<br/>
 					##description##
 				</span>
-				<br/><a id="linkexport" class="blink_me" href="#!" onclick=fnexportnews(this)>Export as Whatsapp Status >></a>
+				<br/><a id="linkexport" class="blink_me" href="#!" onclick=fnexportnews(this)>Download as Whatsapp Status >></a>
 			</div>
 		</div>
 		`;
@@ -134,7 +152,7 @@ window.onload = async function fnloadNews() {
 	  newsArticle.description = newsArticle.description.replaceAll("&amp;nbsp;"," ");
 	  newsArticle.link = newsArticle.link + "?utm_source=ModiNikam&utm_medium=rss&utm_campaign=ModiLipi";
 	  temphtmltext = htmltemplate;
-	  temphtmltext = temphtmltext.replace("##link##", newsArticle.link).replace("##title_ml##", fnParse_mtext(newsArticle.title_ml)).replace("##description_ml##", fnParse_mtext(newsArticle.description_ml)).replace("##title##", newsArticle.title).replace("##description##", newsArticle.description).replace("##image##", newsArticle.image).replace("##pubDate##", newsArticle.pubDate);
+	  temphtmltext = temphtmltext.replace("##link##", newsArticle.link).replace("##linkk##", newsArticle.link).replace("##title_ml##", fnParse_mtext(newsArticle.title_ml)).replace("##description_ml##", fnParse_mtext(newsArticle.description_ml)).replace("##title##", newsArticle.title).replace("##description##", newsArticle.description).replace("##image##", newsArticle.image).replace("##pubDate##", newsArticle.pubDate);
 	  htmltext += temphtmltext;
 	}
 
@@ -205,7 +223,7 @@ async function fnexportnews(e) {
 	await domtoimage.toJpeg(elem, { quality: 0.95, bgcolor: 'white' })
 			.then(function (dataUrl) {
 				var link = document.createElement('a');
-				link.download = 'ModiNikam-news.jpeg';
+				link.download = 'ModiNikam-news.png';
 				link.href = dataUrl;
 				link.click();
 			});
@@ -213,40 +231,23 @@ async function fnexportnews(e) {
 }
 </script>
 </head>
-<!-- Google tag (gtag.js) -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-FD4S6PDJ05"></script>
-<script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
-
-  gtag('config', 'G-FD4S6PDJ05');
-</script>
 
 <body>
-<table class="center">
-<tr>
-	<td>
-		<h1>
-		<a href="https://modinikam.com/">
-		<img src="ModiNikam-Logo-tl.png" title="ModiNikam" alt="ModiNikam - Convert Devnagari to Modi Lipi" width="120" height="90" />
-		</a>
-		</h1>
-	</td>
-	<td>
-		<h2>Convert Marathi (Devnagari) to Modi Lipi</h2>
-		<h2>मराठी बाळबोध (देवनागरी) ते मोडी लिपी</h2>
-		<div style="text-align: center;">❤️ Like us on <a href="https://www.facebook.com/ModiNikam/">facebook</a>!</div>
-	</td>
-</tr>
-</table>
+	<div style="display: flex;">
+		<div><a href="."> <img style="margin-top: 1em; min-width: 100px;" src="ModiNikam-Logo-tl.png" title="ModiNikam" alt="ModiNikam - Convert Devnagari to Modi Lipi" width="137" height="120"/></a></div>
+		<div><h2 style="margin: 1em;">Marathi (Devnagari) to Modi Lipi - मराठी बाळबोध (देवनागरी) ते मोडी लिपी</h2>
+			<div style="text-align: center;">❤️ Like us on <a href="https://www.facebook.com/ModiNikam/">facebook</a>!</div>
+		</div>
+	</div>
+	
+	<hr/>
+	
+	<a href="."><u>Home</u></a> &nbsp;&nbsp;&nbsp;
+	<u><a href="./status.html" title="Whatsapp Status in Modi Lipi">Whatsapp status in ModiLipi</a></u>
 
 <hr/>
 
-<h2><a href="."><u>Convert Marathi (Devnagari) to Modi Lipi - मराठी बाळबोध (देवनागरी) ते मोडी लिपी </u></a></h2>
-<hr/>
-<h2>Click Export - व्हॉट्सॲप वर शेअर करा</h2>
-<!-- <h2><a id="Toggle" href="#">👉 देवनागरी मधेही वाचा  👈</a></h2> -->
+<h2>Click Download - व्हॉट्सॲप वर शेअर करा</h2>
 
 <div id="news-contents" style="font-size: 0.8em; line-height: 150%; width: 100%;" title="Latest news in Modi Lipi">
 

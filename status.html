@@ -1,0 +1,352 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8" />
+	
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-FD4S6PDJ05"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-FD4S6PDJ05');
+</script>
+
+<!-- Primary Meta Tags -->
+<title>ModiNikam - Latest news in Modi Lipi</title>
+<meta name="title" content="ModiNikam - Whatsapp Status in Marathi Modi Lipi">
+<meta name="description" content="Free online tool to convert any text from Marathi language in Devnagari/Balbodh script to Modi Lipi">
+<meta name="keywords" content="Modi Lipi, Modi Script, Convert to Modi Lipi, Convert to Modi Script, Devnagari to Modi Lipi, Marathi to Modi Lipi, Balbodh to Modi Lipi">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<!-- Open Graph / Facebook -->
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://modinikam.com/">
+<meta property="og:title" content="ModiNikam - Whatsapp Status in Marathi Modi Lipi">
+<meta property="og:description" content="Free online tool to convert any text from Marathi language in Devnagari/Balbodh script to Modi Lipi">
+<meta property="og:image" content="https://modinikam.com/ModiNikam-Logo-tl.png">
+
+<!-- Twitter -->
+<meta property="twitter:card" content="summary_large_image">
+<meta property="twitter:url" content="https://modinikam.com/">
+<meta property="twitter:title" content="ModiNikam - Whatsapp Status in Marathi Modi Lipi">
+<meta property="twitter:description" content="Free online tool to convert any text from Marathi language in Devnagari/Balbodh script to Modi Lipi">
+<meta property="twitter:image" content="https://modinikam.com/ModiNikam-Logo-tl.png">
+
+<link rel="icon" type="image/png" sizes="32x32" href="favicon-32x32.png">
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+<script src="https://unpkg.com/merge-images"></script>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/water.css@2/out/light.css">
+<script src="js/dom-to-image.min.js" ></script>
+<!-- <script src="https://cdn.jsdelivr.net/npm/public-google-sheets-parser@latest"></script> -->
+<script src="https://cdn.jsdelivr.net/npm/public-google-sheets-parser@1.5.4"></script>
+
+<style>
+@font-face {
+    font-family: ModiNikam;
+    src:url("ModiNikam-Regular.otf");
+}
+
+.ModiLipi{
+    font-family: ModiNikam;
+	width: 100%;
+	max-width: 100%;
+	margin: auto;
+}
+
+.Eng{
+	color:gray;
+	font-family: Arial, Helvetica, sans-serif;
+	width: 100%;
+	max-width: 100%;
+	margin: auto;
+}
+
+.hidden { display:none; }
+
+textarea {
+	width: 95%;
+	max-width: 100%;
+}
+h1 { text-align: center; padding: 0; margin: 0;}
+h2 { text-align: center; padding: 0.1em; margin: 0; font-size: 1.1em;}
+h3 { text-align: center; padding: 0.1em; margin: 0;}
+
+.blink_me {
+  animation: blinker 0.6s linear infinite;
+}
+@keyframes blinker {
+  50% {
+    opacity: 0.2;
+  }
+}
+
+table.center {
+  margin-left: auto; 
+  margin-right: auto;
+}
+
+.column{
+	display: flex; border: 1px solid; padding: 2%; margin: 2% 0; box-shadow: 3px 5px 3px 3px #888888;
+}
+.column .img {
+	width: 100%; height:100%;
+}
+.column .content {
+	padding: 0 5%; width: 210%;
+}
+@media(max-width:600px) {
+  .column {
+    flex-flow: row wrap;
+  }
+} 
+
+
+.statuscontainer{
+	color: black;
+
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between
+}
+/* Container holding the image and the text */
+.statuscontainer .container {
+  	position: relative;
+	max-width:330px; 
+	min-width:330px; 
+	width: auto;
+	height: auto;
+border: 1px solid; padding: 1%; margin: 1% 0; box-shadow: 3px 5px 3px 3px #888888;
+}
+
+/*background image*/
+.container .img-block {
+	width: auto;
+	height: auto;
+}
+/* Modilipi text */
+.container .text-blockml {
+  position: absolute;
+  bottom: 50%;
+  right: 5%;
+  background-color: rgba(28, 28, 28, 0.7);
+  color: white;
+  padding: 3%;
+	word-wrap:break-word; 
+	width:80%; 
+	font-size:large;
+}
+/* Devnagari text */
+.container .text-blockdn {
+  position: absolute;
+  bottom: 10%;
+  right: 5%;
+  background-color: rgba(0, 0, 0, 0.8);;
+  color: white;
+  padding: 2%;
+	word-wrap:break-word; 
+	width:50%; 
+	font-size:small;
+}
+/*modinikam.com*/
+.container .text-blockmn {
+  position: absolute;
+  top: 3%;
+  right: 10%;
+  background-color: rgba(0, 0, 0, 0.5);;
+  color: white;
+  padding: 1%;
+	font-size:large;
+}
+
+</style>
+
+<script>
+
+window.onload = async function fnloadStatus() {
+	//https://github.com/fureweb-com/public-google-sheets-parser
+		
+	const spreadsheetId = "191cjeqKSnjZwPYdAxBP_b7CtEY1KPf_7_Owu---BHao";
+	const sheetId = "2014847546";
+	const sheetName = "";//"Sheet1";
+	const useFormat = false;
+	const sheetInfo = { sheetId, sheetName, useFormat }
+	const parser = new PublicGoogleSheetsParser(spreadsheetId, sheetInfo)
+	//setLoading()
+	parser.parse().then((items) => {
+
+		let shuffled = items
+			.map(value => ({ value, sort: Math.random() }))
+			.sort((a, b) => a.sort - b.sort)
+			.map(({ value }) => value)
+   		//console.log(shuffled)
+
+		// items should be [{ a :1, b :2, c :3 },{ a :4, b :5, c :6 },{ a :7, b :8, c :9 }]
+		showResult(shuffled);
+	//document.getElementById('status-contents').innerText = JSON.stringify(items, null, 2);
+		//console.table(items)
+	});
+
+}
+
+function getRandomIndex(length){
+	const random = Math.floor(Math.random() * length);
+	//console.log(random, length);
+	return random;
+}
+
+function showResult(items){
+	
+	const imgsArr = ["imgs/nature_snowwall.jpg", "imgs/nature_river.jpg", "imgs/nature_waterleaf.jpg", 
+					"imgs/outdoor_campfire.jpg", "imgs/outdoor_milkyway.jpg", "imgs/outdoor_rainstreetlight.jpg", 
+					"imgs/outdoor_trek.jpg", "imgs/outdoor_wetroad.jpg", "imgs/trees_dark.jpg", 
+					"imgs/outdoor_mountain.jpg", "imgs/outdoor_road.jpg"];
+
+	items.forEach((element, idx) => {
+		let elemScont = document.getElementById('div_statuscontainer');
+/*
+		let elemMarathi = document.createElement('div');
+		elemMarathi.innerHTML = fnParse_mtext(element.Status_ModiLipi);
+		elemMarathi.setAttribute("title", element.Status_Marathi);
+		elemMarathi.setAttribute("class", "ModiLipi");
+		elemMarathi.setAttribute("id", "div_ml_" + idx);
+		elemScont.appendChild(elemMarathi);
+		
+		let elemModilipi = document.createElement('div');
+		elemModilipi.innerHTML = element.Status_Marathi;
+		elemModilipi.setAttribute("id", "div_dn_" + idx);
+		elemScont.appendChild(elemModilipi);
+*/
+		//console.log(element.Status_Marathi);
+		//console.log(element.Status_ModiLipi);
+/**/
+
+		
+		let elemdiv = document.createElement('div');
+		
+		let elemcont = document.createElement('div');
+		elemcont.setAttribute("id", "div_cont_" + idx);
+		elemcont.setAttribute("class", "container");
+		
+		let elemimg = document.createElement('img');
+		elemimg.setAttribute("id", "img_status_" + idx);
+		elemimg.setAttribute("class", "img-block");
+		elemimg.setAttribute("src", imgsArr[getRandomIndex(imgsArr.length)]);
+		elemcont.appendChild(elemimg);
+		let elemblockml = document.createElement('div');
+		elemblockml.setAttribute("id", "div_ml_" + idx);
+		elemblockml.setAttribute("class", "text-blockml ModiLipi");
+		elemblockml.innerHTML = fnParse_mtext(element.Status_ModiLipi);
+		elemblockml.setAttribute("title", element.Status_Marathi);
+		elemcont.appendChild(elemblockml);
+		let blockdn = document.createElement('div');
+		blockdn.setAttribute("id", "div_dn_" + idx);
+		blockdn.setAttribute("class", "text-blockdn");
+		blockdn.innerText = element.Status_Marathi;
+		elemcont.appendChild(blockdn);
+		let blockmn = document.createElement('div');
+		blockmn.setAttribute("class", "text-blockmn");
+		blockmn.innerText = "ModiNikam.com"
+		elemcont.appendChild(blockmn);
+
+		elemdiv.appendChild(elemcont);
+		
+		let elemDownloadLink = document.createElement('button');
+		elemDownloadLink.setAttribute("id", "btn_" + idx);
+		elemDownloadLink.setAttribute("class", "blink_me");
+		elemDownloadLink.innerText = "Download as Status >>";
+		elemDownloadLink.setAttribute("onclick", "fnExportasStatus('div_cont_" + idx +"')" );
+		elemdiv.appendChild(elemDownloadLink);
+
+		elemScont.appendChild(elemdiv);
+
+		/*
+		<div>
+			<div id="div_cont_0" class="container">
+				<img id="imgStatusTemplate" src="imgs/nature_snowwall.jpg" class="img-block"/>
+				<div class="text-blockml ModiLipi" title="अपयशाने निराश होऊ नका,ज्या पायऱ्या तुम्हाला खाली आणतात,त्याच पायऱ्या तुम्हाला वर पण घेऊन जातात."  id="div_ml_0"><span>¡</span><span>p</span><span>y</span><span>`</span><span>/</span><span>/</span><span>n</span><span>o</span><span> </span><span>n</span><span>i</span><span>\</span><span>/</span><span>`</span><span>/</span><span> </span><span>H</span><span>o</span><span>U</span><span> </span><span>n</span><span>K</span><span>‚</span><span>¬</span><span>Y</span><span> </span><span>Þ</span><span>/</span><span>/</span><span>y</span><span>-</span><span>Y</span><span> </span><span>^</span><span>µ</span><span>H</span><span>L</span><span> </span><span>:</span><span>?</span><span> </span><span>A</span><span>&lt;</span><span>/</span><span>t</span><span>/</span><span>t</span><span>‚</span><span>T</span><span>Á</span><span>/</span><span>c</span><span> </span><span>Þ</span><span>/</span><span>/</span><span>y</span><span>-</span><span>Y</span><span> </span><span>^</span><span>µ</span><span>H</span><span>L</span><span> </span><span>v</span><span>|</span><span> </span><span>p</span><span>&lt;</span><span>/</span><span> </span><span>G</span><span>/</span><span>o</span><span>U</span><span>n</span><span> </span><span>J</span><span>t</span><span>/</span><span>t</span><span>.</span><span>¡</span><span>p</span><span>y</span><span>`</span><span>/</span><span>/</span><span>n</span><span>o</span><span> </span><span>n</span><span>i</span><span>\</span><span>/</span><span>`</span><span>/</span><span> </span><span>H</span><span>o</span><span>U</span><span> </span><span>n</span><span>K</span><span>‚</span><span>¬</span><span>Y</span><span> </span><span>Þ</span><span>/</span><span>/</span><span>y</span><span>-</span><span>Y</span><span> </span><span>^</span><span>µ</span><span>H</span><span>L</span><span> </span><span>:</span><span>?</span><span> </span><span>A</span><span>&lt;</span><span>/</span><span>t</span><span>/</span><span>t</span><span>‚</span><span>T</span><span>Á</span><span>/</span><span>c</span><span> </span><span>Þ</span><span>/</span><span>/</span><span>y</span><span>-</span><span>Y</span><span> </span><span>^</span><span>µ</span><span>H</span><span>L</span><span> </span><span>v</span><span>|</span><span> </span><span>p</span><span>&lt;</span><span>/</span><span> </span><span>G</span><span>/</span><span>o</span><span>U</span><span>n</span><span> </span><span>J</span><span>t</span><span>/</span><span>t</span><span>.</span></div>
+				<div class="text-blockdn" id="div_dn_0"><span>अ</span><span>प</span><span>य</span><span>श</span><span>ा</span><span>न</span><span>े</span><span> </span><span>न</span><span>ि</span><span>र</span><span>ा</span><span>श</span><span> </span><span>ह</span><span>ो</span><span>ऊ</span><span> </span><span>न</span><span>क</span><span>ा</span><span>,</span><span>ज</span><span>्</span><span>य</span><span>ा</span><span> </span><span>प</span><span>ा</span><span>य</span><span>ऱ</span><span>्</span><span>य</span><span>ा</span><span> </span><span>त</span><span>ु</span><span>म</span><span>्</span><span>ह</span><span>ा</span><span>ल</span><span>ा</span><span> </span><span>ख</span><span>ा</span><span>ल</span><span>ी</span><span> </span><span>आ</span><span>ण</span><span>त</span><span>ा</span><span>त</span><span>,</span><span>त</span><span>्</span><span>य</span><span>ा</span><span>च</span><span> </span><span>प</span><span>ा</span><span>य</span><span>ऱ</span><span>्</span><span>य</span><span>ा</span><span> </span><span>त</span><span>ु</span><span>म</span><span>्</span><span>ह</span><span>ा</span><span>ल</span><span>ा</span><span> </span><span>व</span><span>र</span><span> </span><span>प</span><span>ण</span><span> </span><span>घ</span><span>े</span><span>ऊ</span><span>न</span><span> </span><span>ज</span><span>ा</span><span>त</span><span>ा</span><span>त</span><span>.</span><span>अ</span><span>प</span><span>य</span><span>श</span><span>ा</span><span>न</span><span>े</span><span> </span><span>न</span><span>ि</span><span>र</span><span>ा</span><span>श</span><span> </span><span>ह</span><span>ो</span><span>ऊ</span><span> </span><span>न</span><span>क</span><span>ा</span><span>,</span><span>ज</span><span>्</span><span>य</span><span>ा</span><span> </span><span>प</span><span>ा</span><span>य</span><span>ऱ</span><span>्</span><span>य</span><span>ा</span><span> </span><span>त</span><span>ु</span><span>म</span><span>्</span><span>ह</span><span>ा</span><span>ल</span><span>ा</span><span> </span><span>ख</span><span>ा</span><span>ल</span><span>ी</span><span> </span><span>आ</span><span>ण</span><span>त</span><span>ा</span><span>त</span><span>,</span><span>त</span><span>्</span><span>य</span><span>ा</span><span>च</span><span> </span><span>प</span><span>ा</span><span>य</span><span>ऱ</span><span>्</span><span>य</span><span>ा</span><span> </span><span>त</span><span>ु</span><span>म</span><span>्</span><span>ह</span><span>ा</span><span>ल</span><span>ा</span><span> </span><span>व</span><span>र</span><span> </span><span>प</span><span>ण</span><span> </span><span>घ</span><span>े</span><span>ऊ</span><span>न</span><span> </span><span>ज</span><span>ा</span><span>त</span><span>ा</span><span>त</span><span>.</span></div>
+				<div class="text-blockmn">ModiNikam.com</div>
+			</div>
+			<button id="btn_0" onclick="fnExportasStatus('div_cont_0')">download</button>
+		</div>
+
+		*/
+	});
+
+}
+
+function fnParse_mtext(val) {
+	let htmltext = "";
+	
+	if(val == undefined) return "";
+
+	for (let i = 0; i < val.length; i++) {
+		if(val[i] == "ÿ") //If char escaped using ÿ Sign U+00FF
+			htmltext += "<span class='Eng'>" + val[++i] + "</span>";
+		else
+			htmltext += "<span>" + val[i] + "</span>";
+	}
+	return(htmltext);
+}
+
+async function fnExportasStatus(elemId) {
+	let elem = document.getElementById(elemId);
+	await domtoimage.toJpeg(elem, { quality: 0.95, bgcolor: 'black' })
+			.then(function (dataUrl) {
+				var link = document.createElement('a');
+				link.download = 'ModiNikam-Status.png';
+				link.href = dataUrl;
+				link.click();
+			});
+}
+
+
+</script>
+</head>
+<body>
+<div style="display: flex;">
+	<div><a href="."> <img style="margin-top: 1em; min-width: 100px;" src="ModiNikam-Logo-tl.png" title="ModiNikam" alt="ModiNikam - Convert Devnagari to Modi Lipi" width="137" height="120"/></a></div>
+	<div><h2 style="margin: 1em;">Marathi (Devnagari) to Modi Lipi - मराठी बाळबोध (देवनागरी) ते मोडी लिपी</h2>
+		<div style="text-align: center;">❤️ Like us on <a href="https://www.facebook.com/ModiNikam/">facebook</a>!</div>
+	</div>
+</div>
+
+<hr/>
+<a href="."><u>Home</u></a>&nbsp;&nbsp;&nbsp;
+<u><a class="blink_me1" href="./news.html" title="Latest news in Modi Lipi">News in ModiLipi</a></u>		
+<hr/>
+<div id="div_statuscontainer" class="statuscontainer">
+<!--
+<div>
+	<div id="div_cont_0" class="container">
+		<img id="imgStatusTemplate" src="imgs/nature_snowwall.jpg" class="img-block"/>
+		<div class="text-blockml ModiLipi" title="अपयशाने निराश होऊ नका,ज्या पायऱ्या तुम्हाला खाली आणतात,त्याच पायऱ्या तुम्हाला वर पण घेऊन जातात."  id="div_ml_0"><span>¡</span><span>p</span><span>y</span><span>`</span><span>/</span><span>/</span><span>n</span><span>o</span><span> </span><span>n</span><span>i</span><span>\</span><span>/</span><span>`</span><span>/</span><span> </span><span>H</span><span>o</span><span>U</span><span> </span><span>n</span><span>K</span><span>‚</span><span>¬</span><span>Y</span><span> </span><span>Þ</span><span>/</span><span>/</span><span>y</span><span>-</span><span>Y</span><span> </span><span>^</span><span>µ</span><span>H</span><span>L</span><span> </span><span>:</span><span>?</span><span> </span><span>A</span><span>&lt;</span><span>/</span><span>t</span><span>/</span><span>t</span><span>‚</span><span>T</span><span>Á</span><span>/</span><span>c</span><span> </span><span>Þ</span><span>/</span><span>/</span><span>y</span><span>-</span><span>Y</span><span> </span><span>^</span><span>µ</span><span>H</span><span>L</span><span> </span><span>v</span><span>|</span><span> </span><span>p</span><span>&lt;</span><span>/</span><span> </span><span>G</span><span>/</span><span>o</span><span>U</span><span>n</span><span> </span><span>J</span><span>t</span><span>/</span><span>t</span><span>.</span><span>¡</span><span>p</span><span>y</span><span>`</span><span>/</span><span>/</span><span>n</span><span>o</span><span> </span><span>n</span><span>i</span><span>\</span><span>/</span><span>`</span><span>/</span><span> </span><span>H</span><span>o</span><span>U</span><span> </span><span>n</span><span>K</span><span>‚</span><span>¬</span><span>Y</span><span> </span><span>Þ</span><span>/</span><span>/</span><span>y</span><span>-</span><span>Y</span><span> </span><span>^</span><span>µ</span><span>H</span><span>L</span><span> </span><span>:</span><span>?</span><span> </span><span>A</span><span>&lt;</span><span>/</span><span>t</span><span>/</span><span>t</span><span>‚</span><span>T</span><span>Á</span><span>/</span><span>c</span><span> </span><span>Þ</span><span>/</span><span>/</span><span>y</span><span>-</span><span>Y</span><span> </span><span>^</span><span>µ</span><span>H</span><span>L</span><span> </span><span>v</span><span>|</span><span> </span><span>p</span><span>&lt;</span><span>/</span><span> </span><span>G</span><span>/</span><span>o</span><span>U</span><span>n</span><span> </span><span>J</span><span>t</span><span>/</span><span>t</span><span>.</span></div>
+		<div class="text-blockdn" id="div_dn_0"><span>अ</span><span>प</span><span>य</span><span>श</span><span>ा</span><span>न</span><span>े</span><span> </span><span>न</span><span>ि</span><span>र</span><span>ा</span><span>श</span><span> </span><span>ह</span><span>ो</span><span>ऊ</span><span> </span><span>न</span><span>क</span><span>ा</span><span>,</span><span>ज</span><span>्</span><span>य</span><span>ा</span><span> </span><span>प</span><span>ा</span><span>य</span><span>ऱ</span><span>्</span><span>य</span><span>ा</span><span> </span><span>त</span><span>ु</span><span>म</span><span>्</span><span>ह</span><span>ा</span><span>ल</span><span>ा</span><span> </span><span>ख</span><span>ा</span><span>ल</span><span>ी</span><span> </span><span>आ</span><span>ण</span><span>त</span><span>ा</span><span>त</span><span>,</span><span>त</span><span>्</span><span>य</span><span>ा</span><span>च</span><span> </span><span>प</span><span>ा</span><span>य</span><span>ऱ</span><span>्</span><span>य</span><span>ा</span><span> </span><span>त</span><span>ु</span><span>म</span><span>्</span><span>ह</span><span>ा</span><span>ल</span><span>ा</span><span> </span><span>व</span><span>र</span><span> </span><span>प</span><span>ण</span><span> </span><span>घ</span><span>े</span><span>ऊ</span><span>न</span><span> </span><span>ज</span><span>ा</span><span>त</span><span>ा</span><span>त</span><span>.</span><span>अ</span><span>प</span><span>य</span><span>श</span><span>ा</span><span>न</span><span>े</span><span> </span><span>न</span><span>ि</span><span>र</span><span>ा</span><span>श</span><span> </span><span>ह</span><span>ो</span><span>ऊ</span><span> </span><span>न</span><span>क</span><span>ा</span><span>,</span><span>ज</span><span>्</span><span>य</span><span>ा</span><span> </span><span>प</span><span>ा</span><span>य</span><span>ऱ</span><span>्</span><span>य</span><span>ा</span><span> </span><span>त</span><span>ु</span><span>म</span><span>्</span><span>ह</span><span>ा</span><span>ल</span><span>ा</span><span> </span><span>ख</span><span>ा</span><span>ल</span><span>ी</span><span> </span><span>आ</span><span>ण</span><span>त</span><span>ा</span><span>त</span><span>,</span><span>त</span><span>्</span><span>य</span><span>ा</span><span>च</span><span> </span><span>प</span><span>ा</span><span>य</span><span>ऱ</span><span>्</span><span>य</span><span>ा</span><span> </span><span>त</span><span>ु</span><span>म</span><span>्</span><span>ह</span><span>ा</span><span>ल</span><span>ा</span><span> </span><span>व</span><span>र</span><span> </span><span>प</span><span>ण</span><span> </span><span>घ</span><span>े</span><span>ऊ</span><span>न</span><span> </span><span>ज</span><span>ा</span><span>त</span><span>ा</span><span>त</span><span>.</span></div>
+		<div class="text-blockmn">ModiNikam.com</div>
+	</div>
+	<button id="btn_0" onclick="fnExportasStatus('div_cont_0')">download</button>
+</div>
+<div>
+	<div id="div_cont_1" class="container">
+		<img id="imgStatusTemplate" src="imgs/nature_snowwall.jpg" class="img-block"/>
+		<div class="text-blockml ModiLipi" title="अपयशाने निराश होऊ नका,ज्या पायऱ्या तुम्हाला खाली आणतात,त्याच पायऱ्या तुम्हाला वर पण घेऊन जातात."  id="div_ml_1"><span>asd¡</span><span>p</span><span>y</span><span>`</span><span>/</span><span>/</span><span>n</span><span>o</span><span> </span><span>n</span><span>i</span><span>\</span><span>/</span><span>`</span><span>/</span><span> </span><span>H</span><span>o</span><span>U</span><span> </span><span>n</span><span>K</span><span>‚</span><span>¬</span><span>Y</span><span> </span><span>Þ</span><span>/</span><span>/</span><span>y</span><span>-</span><span>Y</span><span> </span><span>^</span><span>µ</span><span>H</span><span>L</span><span> </span><span>:</span><span>?</span><span> </span><span>A</span><span>&lt;</span><span>/</span><span>t</span><span>/</span><span>t</span><span>‚</span><span>T</span><span>Á</span><span>/</span><span>c</span><span> </span><span>Þ</span><span>/</span><span>/</span><span>y</span><span>-</span><span>Y</span><span> </span><span>^</span><span>µ</span><span>H</span><span>L</span><span> </span><span>v</span><span>|</span><span> </span><span>p</span><span>&lt;</span><span>/</span><span> </span><span>G</span><span>/</span><span>o</span><span>U</span><span>n</span><span> </span><span>J</span><span>t</span><span>/</span><span>t</span><span>.</span><span>¡</span><span>p</span><span>y</span><span>`</span><span>/</span><span>/</span><span>n</span><span>o</span><span> </span><span>n</span><span>i</span><span>\</span><span>/</span><span>`</span><span>/</span><span> </span><span>H</span><span>o</span><span>U</span><span> </span><span>n</span><span>K</span><span>‚</span><span>¬</span><span>Y</span><span> </span><span>Þ</span><span>/</span><span>/</span><span>y</span><span>-</span><span>Y</span><span> </span><span>^</span><span>µ</span><span>H</span><span>L</span><span> </span><span>:</span><span>?</span><span> </span><span>A</span><span>&lt;</span><span>/</span><span>t</span><span>/</span><span>t</span><span>‚</span><span>T</span><span>Á</span><span>/</span><span>c</span><span> </span><span>Þ</span><span>/</span><span>/</span><span>y</span><span>-</span><span>Y</span><span> </span><span>^</span><span>µ</span><span>H</span><span>L</span><span> </span><span>v</span><span>|</span><span> </span><span>p</span><span>&lt;</span><span>/</span><span> </span><span>G</span><span>/</span><span>o</span><span>U</span><span>n</span><span> </span><span>J</span><span>t</span><span>/</span><span>t</span><span>.</span></div>
+		<div class="text-blockdn" id="div_dn_1"><span>अ</span><span>प</span><span>य</span><span>श</span><span>ा</span><span>न</span><span>े</span><span> </span><span>न</span><span>ि</span><span>र</span><span>ा</span><span>श</span><span> </span><span>ह</span><span>ो</span><span>ऊ</span><span> </span><span>न</span><span>क</span><span>ा</span><span>,</span><span>ज</span><span>्</span><span>य</span><span>ा</span><span> </span><span>प</span><span>ा</span><span>य</span><span>ऱ</span><span>्</span><span>य</span><span>ा</span><span> </span><span>त</span><span>ु</span><span>म</span><span>्</span><span>ह</span><span>ा</span><span>ल</span><span>ा</span><span> </span><span>ख</span><span>ा</span><span>ल</span><span>ी</span><span> </span><span>आ</span><span>ण</span><span>त</span><span>ा</span><span>त</span><span>,</span><span>त</span><span>्</span><span>य</span><span>ा</span><span>च</span><span> </span><span>प</span><span>ा</span><span>य</span><span>ऱ</span><span>्</span><span>य</span><span>ा</span><span> </span><span>त</span><span>ु</span><span>म</span><span>्</span><span>ह</span><span>ा</span><span>ल</span><span>ा</span><span> </span><span>व</span><span>र</span><span> </span><span>प</span><span>ण</span><span> </span><span>घ</span><span>े</span><span>ऊ</span><span>न</span><span> </span><span>ज</span><span>ा</span><span>त</span><span>ा</span><span>त</span><span>.</span><span>अ</span><span>प</span><span>य</span><span>श</span><span>ा</span><span>न</span><span>े</span><span> </span><span>न</span><span>ि</span><span>र</span><span>ा</span><span>श</span><span> </span><span>ह</span><span>ो</span><span>ऊ</span><span> </span><span>न</span><span>क</span><span>ा</span><span>,</span><span>ज</span><span>्</span><span>य</span><span>ा</span><span> </span><span>प</span><span>ा</span><span>य</span><span>ऱ</span><span>्</span><span>य</span><span>ा</span><span> </span><span>त</span><span>ु</span><span>म</span><span>्</span><span>ह</span><span>ा</span><span>ल</span><span>ा</span><span> </span><span>ख</span><span>ा</span><span>ल</span><span>ी</span><span> </span><span>आ</span><span>ण</span><span>त</span><span>ा</span><span>त</span><span>,</span><span>त</span><span>्</span><span>य</span><span>ा</span><span>च</span><span> </span><span>प</span><span>ा</span><span>य</span><span>ऱ</span><span>्</span><span>य</span><span>ा</span><span> </span><span>त</span><span>ु</span><span>म</span><span>्</span><span>ह</span><span>ा</span><span>ल</span><span>ा</span><span> </span><span>व</span><span>र</span><span> </span><span>प</span><span>ण</span><span> </span><span>घ</span><span>े</span><span>ऊ</span><span>न</span><span> </span><span>ज</span><span>ा</span><span>त</span><span>ा</span><span>त</span><span>.</span></div>
+		<div class="text-blockmn">ModiNikam.com</div>
+	</div>
+	<button id="btn_1" onclick="fnExportasStatus('div_cont_1')">Download</button>
+</div>
+-->
+</div>
+
+<hr/>
+<p style="text-align: center; font-size:0.7em;">जय हिंद जय महाराष्ट्र<br/>&copy; 2023 ModiNikam. All Rights Reserved.<br/>
+email: modinikam@gmail.com</p>
+
+<br/>
+
+</body>
+</html>
