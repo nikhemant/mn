@@ -17,7 +17,7 @@
 <title>ModiNikam - Latest news in Modi Lipi</title>
 <meta name="title" content="ModiNikam - Whatsapp Status in Marathi Modi Lipi">
 <meta name="description" content="Free online tool to convert any text from Marathi language in Devnagari/Balbodh script to Modi Lipi">
-<meta name="keywords" content="Modi Lipi, Modi Script, Convert to Modi Lipi, Convert to Modi Script, Devnagari to Modi Lipi, Marathi to Modi Lipi, Balbodh to Modi Lipi">
+<meta name="keywords" content="Modi Lipi, Modi Script, Modi Lipi Converter, Convert to Modi Lipi, Convert to Modi Script, Devnagari to Modi Lipi, Marathi to Modi Lipi, Balbodh to Modi Lipi">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 <!-- Open Graph / Facebook -->
@@ -57,7 +57,7 @@
 }
 
 .Eng{
-	color:gray;
+	color:white;
 	font-family: Arial, Helvetica, sans-serif;
 	width: 100%;
 	max-width: 100%;
@@ -113,7 +113,7 @@ table.center {
     justify-content: space-between
 }
 /* Container holding the image and the text */
-.statuscontainer .container {
+.container {
   	position: relative;
 	max-width:330px; 
 	min-width:330px; 
@@ -173,30 +173,46 @@ border: 1px solid; padding: 1%; margin: 1% 0; box-shadow: 3px 5px 3px 3px #88888
 <script>
 
 window.onload = async function fnloadStatus() {
-	//https://github.com/fureweb-com/public-google-sheets-parser
-	//https://stackoverflow.com/questions/70902197/accessing-a-public-google-sheets-data-directly-from-client-side-javascript
-		
-	const spreadsheetId = "191cjeqKSnjZwPYdAxBP_b7CtEY1KPf_7_Owu---BHao";
-	const sheetId = "2014847546";
-	const sheetName = "";//"Sheet1";
-	const useFormat = false;
-	const sheetInfo = { sheetId, sheetName, useFormat }
-	const parser = new PublicGoogleSheetsParser(spreadsheetId, sheetInfo)
-	//setLoading()
-	parser.parse().then((items) => {
+	
+	//if querystring present then show user status editor
+	const urlParams = new URLSearchParams(window.location.search);
+	const dntext = urlParams.get('dn');
+	const mltext = urlParams.get('ml');
 
-		let shuffled = items
-			.map(value => ({ value, sort: Math.random() }))
-			.sort((a, b) => a.sort - b.sort)
-			.map(({ value }) => value)
-   		//console.log(shuffled)
+	if(dntext && mltext){
+		let elemml = document.getElementById('div_ml_user');
+		let elemdn = document.getElementById('div_dn_user');
+		elemdn.innerText = dntext;
+		elemml.innerHTML = fnParse_mtext(mltext);
+		elemml.setAttribute("title", dntext);
+		document.getElementById("a_statuslink").style.visibility="visible";
 
-		// items should be [{ a :1, b :2, c :3 },{ a :4, b :5, c :6 },{ a :7, b :8, c :9 }]
-		showResult(shuffled);
-	//document.getElementById('status-contents').innerText = JSON.stringify(items, null, 2);
-		//console.table(items)
-	});
+	} else {
+		document.getElementById("div_Scont_user").style.display="none";
+		//https://github.com/fureweb-com/public-google-sheets-parser
+		//https://stackoverflow.com/questions/70902197/accessing-a-public-google-sheets-data-directly-from-client-side-javascript
+			
+		const spreadsheetId = "191cjeqKSnjZwPYdAxBP_b7CtEY1KPf_7_Owu---BHao";
+		const sheetId = "2014847546";
+		const sheetName = "";//"Sheet1";
+		const useFormat = false;
+		const sheetInfo = { sheetId, sheetName, useFormat }
+		const parser = new PublicGoogleSheetsParser(spreadsheetId, sheetInfo)
+		//setLoading()
+		parser.parse().then((items) => {
 
+			let shuffled = items
+				.map(value => ({ value, sort: Math.random() }))
+				.sort((a, b) => a.sort - b.sort)
+				.map(({ value }) => value)
+			//console.log(shuffled)
+
+			// items should be [{ a :1, b :2, c :3 },{ a :4, b :5, c :6 },{ a :7, b :8, c :9 }]
+			showResult(shuffled);
+		//document.getElementById('status-contents').innerText = JSON.stringify(items, null, 2);
+			//console.table(items)
+		});
+	}
 }
 
 function getRandomIndex(length){
@@ -281,12 +297,13 @@ function showResult(items){
 		/*
 		<div>
 			<div id="div_cont_0" class="container">
-				<img id="imgStatusTemplate" src="imgs/nature_snowwall.jpg" class="img-block"/>
-				<div class="text-blockml ModiLipi" title="अपयशाने निराश होऊ नका,ज्या पायऱ्या तुम्हाला खाली आणतात,त्याच पायऱ्या तुम्हाला वर पण घेऊन जातात."  id="div_ml_0"><span>¡</span><span>p</span><span>y</span><span>`</span><span>/</span><span>/</span><span>n</span><span>o</span><span> </span><span>n</span><span>i</span><span>\</span><span>/</span><span>`</span><span>/</span><span> </span><span>H</span><span>o</span><span>U</span><span> </span><span>n</span><span>K</span><span>‚</span><span>¬</span><span>Y</span><span> </span><span>Þ</span><span>/</span><span>/</span><span>y</span><span>-</span><span>Y</span><span> </span><span>^</span><span>µ</span><span>H</span><span>L</span><span> </span><span>:</span><span>?</span><span> </span><span>A</span><span>&lt;</span><span>/</span><span>t</span><span>/</span><span>t</span><span>‚</span><span>T</span><span>Á</span><span>/</span><span>c</span><span> </span><span>Þ</span><span>/</span><span>/</span><span>y</span><span>-</span><span>Y</span><span> </span><span>^</span><span>µ</span><span>H</span><span>L</span><span> </span><span>v</span><span>|</span><span> </span><span>p</span><span>&lt;</span><span>/</span><span> </span><span>G</span><span>/</span><span>o</span><span>U</span><span>n</span><span> </span><span>J</span><span>t</span><span>/</span><span>t</span><span>.</span><span>¡</span><span>p</span><span>y</span><span>`</span><span>/</span><span>/</span><span>n</span><span>o</span><span> </span><span>n</span><span>i</span><span>\</span><span>/</span><span>`</span><span>/</span><span> </span><span>H</span><span>o</span><span>U</span><span> </span><span>n</span><span>K</span><span>‚</span><span>¬</span><span>Y</span><span> </span><span>Þ</span><span>/</span><span>/</span><span>y</span><span>-</span><span>Y</span><span> </span><span>^</span><span>µ</span><span>H</span><span>L</span><span> </span><span>:</span><span>?</span><span> </span><span>A</span><span>&lt;</span><span>/</span><span>t</span><span>/</span><span>t</span><span>‚</span><span>T</span><span>Á</span><span>/</span><span>c</span><span> </span><span>Þ</span><span>/</span><span>/</span><span>y</span><span>-</span><span>Y</span><span> </span><span>^</span><span>µ</span><span>H</span><span>L</span><span> </span><span>v</span><span>|</span><span> </span><span>p</span><span>&lt;</span><span>/</span><span> </span><span>G</span><span>/</span><span>o</span><span>U</span><span>n</span><span> </span><span>J</span><span>t</span><span>/</span><span>t</span><span>.</span></div>
-				<div class="text-blockdn" id="div_dn_0"><span>अ</span><span>प</span><span>य</span><span>श</span><span>ा</span><span>न</span><span>े</span><span> </span><span>न</span><span>ि</span><span>र</span><span>ा</span><span>श</span><span> </span><span>ह</span><span>ो</span><span>ऊ</span><span> </span><span>न</span><span>क</span><span>ा</span><span>,</span><span>ज</span><span>्</span><span>य</span><span>ा</span><span> </span><span>प</span><span>ा</span><span>य</span><span>ऱ</span><span>्</span><span>य</span><span>ा</span><span> </span><span>त</span><span>ु</span><span>म</span><span>्</span><span>ह</span><span>ा</span><span>ल</span><span>ा</span><span> </span><span>ख</span><span>ा</span><span>ल</span><span>ी</span><span> </span><span>आ</span><span>ण</span><span>त</span><span>ा</span><span>त</span><span>,</span><span>त</span><span>्</span><span>य</span><span>ा</span><span>च</span><span> </span><span>प</span><span>ा</span><span>य</span><span>ऱ</span><span>्</span><span>य</span><span>ा</span><span> </span><span>त</span><span>ु</span><span>म</span><span>्</span><span>ह</span><span>ा</span><span>ल</span><span>ा</span><span> </span><span>व</span><span>र</span><span> </span><span>प</span><span>ण</span><span> </span><span>घ</span><span>े</span><span>ऊ</span><span>न</span><span> </span><span>ज</span><span>ा</span><span>त</span><span>ा</span><span>त</span><span>.</span><span>अ</span><span>प</span><span>य</span><span>श</span><span>ा</span><span>न</span><span>े</span><span> </span><span>न</span><span>ि</span><span>र</span><span>ा</span><span>श</span><span> </span><span>ह</span><span>ो</span><span>ऊ</span><span> </span><span>न</span><span>क</span><span>ा</span><span>,</span><span>ज</span><span>्</span><span>य</span><span>ा</span><span> </span><span>प</span><span>ा</span><span>य</span><span>ऱ</span><span>्</span><span>य</span><span>ा</span><span> </span><span>त</span><span>ु</span><span>म</span><span>्</span><span>ह</span><span>ा</span><span>ल</span><span>ा</span><span> </span><span>ख</span><span>ा</span><span>ल</span><span>ी</span><span> </span><span>आ</span><span>ण</span><span>त</span><span>ा</span><span>त</span><span>,</span><span>त</span><span>्</span><span>य</span><span>ा</span><span>च</span><span> </span><span>प</span><span>ा</span><span>य</span><span>ऱ</span><span>्</span><span>य</span><span>ा</span><span> </span><span>त</span><span>ु</span><span>म</span><span>्</span><span>ह</span><span>ा</span><span>ल</span><span>ा</span><span> </span><span>व</span><span>र</span><span> </span><span>प</span><span>ण</span><span> </span><span>घ</span><span>े</span><span>ऊ</span><span>न</span><span> </span><span>ज</span><span>ा</span><span>त</span><span>ा</span><span>त</span><span>.</span></div>
+				<img id="img_status_0" class="img-block" src="imgs/orange.jpg">
+				<div id="div_ml_0" class="text-blockml ModiLipi" title="स्वतःच्या मेहनतीवर विश्वास असणाऱ्यांना आपला प्रतिस्पर्धी काय करतोय याची अजिबात पर्वा नसते."><span>ª</span><span>v</span><span>t</span><span>Ë</span><span>&gt;</span><span>Y</span><span> </span><span>m</span><span>o</span><span>h</span><span>n</span><span>t</span><span>i</span><span>v</span><span>|</span><span> </span><span>v</span><span>i</span><span>¢</span><span>V</span><span>s</span><span> </span><span>¡</span><span>s</span><span>&lt;</span><span>/</span><span>/</span><span>-</span><span>Y</span><span>,</span><span>N</span><span> </span><span>A</span><span>p</span><span>L</span><span> </span><span>Þ</span><span>/</span><span>î</span><span>t</span><span>i</span><span>ª</span><span>p</span><span>q</span><span>i</span><span>_</span><span> </span><span>K</span><span>y</span><span> </span><span>e</span><span>t</span><span>/</span><span>o</span><span>y</span><span> </span><span>Y</span><span>c</span><span>i</span><span> </span><span>¡</span><span>j</span><span>i</span><span>B</span><span>t</span><span> </span><span>p</span><span>V</span><span>_</span><span> </span><span>n</span><span>s</span><span>t</span><span>o</span><span>.</span></div>
+				<div id="div_dn_0" class="text-blockdn">स्वतःच्या मेहनतीवर विश्वास असणाऱ्यांना आपला प्रतिस्पर्धी काय करतोय याची अजिबात पर्वा नसते.</div>
 				<div class="text-blockmn">ModiNikam.com</div>
 			</div>
-			<button id="btn_0" onclick="fnExportasStatus('div_cont_0')">download</button>
+			<button id="btn_0" class="blink_me btn" onclick="fnExportasStatus('div_cont_0')">Download Status</button>
+			<button id="btn_0" class="btn" onclick="fnChangebg('img_status_0')">Change Background</button>
 		</div>
 
 		*/
@@ -336,9 +353,24 @@ function fnChangebg(elemImgId) {
 </div>
 
 <hr/>
-<a href="."><u>Home</u></a>&nbsp;&nbsp;&nbsp;
-<u><a class="blink_me1" href="./news.html" title="Latest news in Modi Lipi">News in ModiLipi</a></u>		
+<a href="."><u>Home</u></a>
+&nbsp;&nbsp;&nbsp;<u><a class="blink_me1" href="./news.html" title="Latest news in Modi Lipi">News in ModiLipi</a></u>		
+&nbsp;&nbsp;&nbsp;<u><a href="./status.html" title="Whatsapp Status in Modi Lipi" style="visibility: hidden;" id = "a_statuslink">Whatsapp status in ModiLipi</a></u>
 <hr/>
+
+<div id="div_Scont_user">
+	<div id="div_cont_user" class="container">
+		<img id="img_status_user" class="img-block" src="imgs/mnstatustemplate.png">
+		<div id="div_ml_user" class="text-blockml ModiLipi" title="Marathi/Devnagari Text"><span>Modilipi Text</span></div>
+		<div id="div_dn_user" class="text-blockdn">Marathi/Devnagari Text</div>
+		<div class="text-blockmn">ModiNikam.com</div>
+	</div>
+	<button id="btn_user" class="btn" onclick="fnExportasStatus('div_cont_user')">Download Status</button>
+	<button id="btn_user" class="blink_me btn" onclick="fnChangebg('img_status_user')">Change Background</button>
+</div>
+
+
+
 <div id="div_statuscontainer" class="statuscontainer">
 <!--
 <div>

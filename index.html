@@ -16,7 +16,7 @@
 <title>ModiNikam - Convert Devnagari to Modi Lipi</title>
 <meta name="title" content="ModiNikam - Convert Devnagari to Modi Lipi">
 <meta name="description" content="Free online tool to convert any text from Marathi language in Devnagari/Balbodh script to Modi Lipi">
-<meta name="keywords" content="Modi Lipi, Modi Script, Convert to Modi Lipi, Convert to Modi Script, Devnagari to Modi Lipi, Marathi to Modi Lipi, Balbodh to Modi Lipi">
+<meta name="keywords" content="Modi Lipi, Modi Script, Modi Lipi Converter, Convert to Modi Lipi, Convert to Modi Script, Devnagari to Modi Lipi, Marathi to Modi Lipi, Balbodh to Modi Lipi">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 <!-- Open Graph / Facebook -->
@@ -36,7 +36,7 @@
 <link rel="icon" type="image/png" sizes="32x32" href="favicon-32x32.png">
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
-<script src="https://unpkg.com/merge-images"></script>
+<!-- <script src="https://unpkg.com/merge-images"></script> -->
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/water.css@2/out/light.css">
 
 <style>
@@ -94,6 +94,13 @@ h3 { text-align: center; padding: 0.1em; margin: 0;}
   align-items: center;
   justify-content: space-between;
 }
+
+.btn{
+	padding: 5px;
+	border-radius: 7px;
+	border: 1px solid gray;
+}
+
 </style>
 <meta name="viewport" content="width=device-width">
 <script>
@@ -111,33 +118,50 @@ async function BB_to_Modi(dtext){
 		alert("Please fill the google form to convert longer text. \nClick 'Want to convert longer text?' link on the page.")
 	}	
 	else {
-		val1 = val.mtext;
+		//val1 = val.mtext;
 		let htmltext = "";
+		htmltext = fnParse_mtext(val.mtext)
+		/*
 		for (let i = 0; i < val1.length; i++) {
 			if(val1[i] == "ÿ") //If char escaped using (meaning english char) ÿ Sign U+00FF
 				htmltext += "<span class='Eng'>" + val1[++i] + "</span>";
 			else
 				htmltext += "<span>" + val1[i] + "</span>";
-		}
+		}*/
 		htmltext += '<div style="font-size: 7px; color: gray; position:absolute; bottom:0px;" class="Eng">ModiNikam.com</div>';
 		document.getElementById("divoutputdiv").innerHTML = htmltext;	
+		document.querySelector("#hdn_dntext").value = text;
+		document.querySelector("#hdn_mltext").value = val.mtext;
 	}
 	fnCreateScreenShotForExport();
 	fnPost(dtext, val.mtext, val.cf);
-
+	return val.mtext;
 }
 
+function fnParse_mtext(val) {
+	let htmltext = "";
+	
+	if(val == undefined) return "";
+
+	for (let i = 0; i < val.length; i++) {
+		if(val[i] == "ÿ") //If char escaped using ÿ Sign U+00FF
+			htmltext += "<span class='Eng'>" + val[++i] + "</span>";
+		else
+			htmltext += "<span>" + val[i] + "</span>";
+	}
+	return(htmltext);
+}
 
 function fntype(e){
-//alert(e.value);
-text = document.getElementById('txtBBtoModi').value;
-var val = "";
-if(text == "") { alert("Please enter Devnagari/Marathi text -> convert to Modi -> and then click Export.") }
-else { 
-	document.querySelector("#btnExportAsWAStatus").style.visibility = "visible"; 	
-	document.querySelector("#btnExportAsImage").style.visibility = "visible"; 
-	val = BB_to_Modi(text); 
-}
+	//alert(e.value);
+	text = document.getElementById('txtBBtoModi').value;
+	var val = "";
+	if(text.trim() == "") { alert("Please enter Devnagari/Marathi text -> convert to Modi -> and then click Export.") }
+	else { 
+		document.querySelector("#btnExportAsWAStatus").style.visibility = "visible"; 	
+		document.querySelector("#btnExportAsImage").style.visibility = "visible"; 
+		val = BB_to_Modi(text); 		
+	}
 }
 
 function fnCreateScreenShotForExport() {
@@ -176,9 +200,15 @@ function fnExportScreenShot() {
 	download.click();
 }
 
-
+function fnCreateStatusRedirect() {	
+	if(!document.getElementById('mlcanvas')) alert("Please enter text -> convert to Modi -> and then click Export.");
+	// similar behavior as clicking on a link
+	window.location.href = "./status.html?dn="+ document.querySelector("#hdn_dntext").value +"&ml=" + document.querySelector("#hdn_mltext").value;
+}
+/*
 async function fnExportScreenShotasStatus() {
-	if(!document.getElementById('mlcanvas')) alert("Please enter text -> convert to Modi -> and then click Export.")
+	if(!document.getElementById('mlcanvas')) alert("Please enter text -> convert to Modi -> and then click Export.");
+
 	var mlcanvas = document.getElementById("mlcanvas")
 	var dncanvas = document.getElementById("dncanvas")
 
@@ -214,7 +244,7 @@ async function fnExportScreenShotasStatus() {
 	download.download = 'ModiNikam_status.png';
 	download.click();
 }
-
+*/
 
 function fnPost(seltext, mtext, cfinfo) {
 	cinfo = fn_GetClientInfo();
@@ -293,10 +323,10 @@ var info={
 <hr/>
 <!-- <input type="text" id="txtBBtoModi1" name="txtBBtoModi1"> -->
 <b>Enter text in <u>Marathi/Devnagari</u> and click on Convert button:</b><br/>
-<textarea id="txtBBtoModi" name="txtBBtoModi1" rows="3" cols="37"></textarea><br>
+<textarea id="txtBBtoModi" name="txtBBtoModi1" rows="3" cols="37"></textarea>
 
 <div class="row">
-<input type="button" value="Convert to Modi Lipi" class="" onclick="fntype(this)"/>
+<input type="button" value="Convert to Modi Lipi" class="btn" onclick="fntype(this)"/>
 <a id="anchorID" href="https://docs.google.com/forms/d/e/1FAIpQLSdNrUSqCv-diiabGHxE-hCnDGxjWoUKZq0Yp4PIJwQ0t3Wa-g/viewform" target="_blank">Want to convert longer text?</a>
 </div>
 <!--<input type="button" value="Clear" onclick="fnClr()"/> -->
@@ -308,12 +338,14 @@ var info={
 <div id="divsourcetext" class="outputdiv" hidden></div>
 <hr/>
 <div class="row">
-<input id="btnExportAsImage" type="button" value="Export as Image >>" class="" onclick="fnExportScreenShot(this)" style="visibility: hidden;"  />
-<input id="btnExportAsWAStatus" type="button" value="Export as Whatsapp Status >>" class="" onclick="fnExportScreenShotasStatus(this)" style="visibility: hidden;" />
+<input id="btnExportAsImage" type="button" value="Export as Image >>" class="btn" onclick="fnExportScreenShot(this)" style="visibility: hidden;"  />
+<input id="btnExportAsWAStatus" type="button" value="Create Whatsapp Status >>" class="blink_me btn" onclick="fnCreateStatusRedirect(this)" style="visibility: hidden;" />
+
 </div>
 <img id="imgStatus" hidden/>
 <img id="imgStatusTemplate" src="imgs/mnstatustemplate.png" hidden/>
-
+<input type="hidden" id="hdn_dntext" value="">
+<input type="hidden" id="hdn_mltext" value="">
 <br>
 <fieldset style="text-align: center; border: 1px 1px;">💸💸💸 आमच्या प्रयत्नांना दाद म्हणून आणि मोडी लिपी वरील संशोधन सुरु ठेवण्यासाठी आपले अमूल्य योगदान प्रार्थनीय आहे <a class="blink_me" href="https://pages.razorpay.com/ModiNikam/">--&gt; योगदान करा!  &lt;--</a></fieldset>
 
