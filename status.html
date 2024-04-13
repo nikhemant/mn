@@ -132,7 +132,7 @@ border: 1px solid; padding: 1%; margin: 1% 0; box-shadow: 3px 5px 3px 3px #88888
   position: absolute;
   bottom: 50%;
   right: 5%;
-  background-color: rgba(28, 28, 28, 0.7);
+  background-color: rgba(28, 28, 28, 0.5);
   color: white;
   padding: 3%;
 	word-wrap:break-word; 
@@ -162,12 +162,19 @@ border: 1px solid; padding: 1%; margin: 1% 0; box-shadow: 3px 5px 3px 3px #88888
 	font-size:large;
 }
 
+.btn{
+	padding: 5px;
+	border-radius: 7px;
+	border: 1px solid gray;
+}
+
 </style>
 
 <script>
 
 window.onload = async function fnloadStatus() {
 	//https://github.com/fureweb-com/public-google-sheets-parser
+	//https://stackoverflow.com/questions/70902197/accessing-a-public-google-sheets-data-directly-from-client-side-javascript
 		
 	const spreadsheetId = "191cjeqKSnjZwPYdAxBP_b7CtEY1KPf_7_Owu---BHao";
 	const sheetId = "2014847546";
@@ -198,13 +205,14 @@ function getRandomIndex(length){
 	return random;
 }
 
+const imgsArr = ["imgs/nature_snowwall.jpg", "imgs/nature_river.jpg", "imgs/nature_waterleaf.jpg", 
+				"imgs/outdoor_campfire.jpg", "imgs/outdoor_milkyway.jpg", "imgs/outdoor_rainstreetlight.jpg", 
+				"imgs/outdoor_trek.jpg", "imgs/outdoor_wetroad.jpg", "imgs/trees_dark.jpg", 
+				"imgs/pink.jpg", "imgs/orange.jpg", "imgs/blue.jpg", 
+				"imgs/outdoor_mountain.jpg", "imgs/outdoor_road.jpg"];
+
 function showResult(items){
 	
-	const imgsArr = ["imgs/nature_snowwall.jpg", "imgs/nature_river.jpg", "imgs/nature_waterleaf.jpg", 
-					"imgs/outdoor_campfire.jpg", "imgs/outdoor_milkyway.jpg", "imgs/outdoor_rainstreetlight.jpg", 
-					"imgs/outdoor_trek.jpg", "imgs/outdoor_wetroad.jpg", "imgs/trees_dark.jpg", 
-					"imgs/outdoor_mountain.jpg", "imgs/outdoor_road.jpg"];
-
 	items.forEach((element, idx) => {
 		let elemScont = document.getElementById('div_statuscontainer');
 /*
@@ -256,10 +264,17 @@ function showResult(items){
 		
 		let elemDownloadLink = document.createElement('button');
 		elemDownloadLink.setAttribute("id", "btn_" + idx);
-		elemDownloadLink.setAttribute("class", "blink_me");
-		elemDownloadLink.innerText = "Download as Status >>";
+		elemDownloadLink.setAttribute("class", "blink_me btn");
+		elemDownloadLink.innerText = "Download Status";
 		elemDownloadLink.setAttribute("onclick", "fnExportasStatus('div_cont_" + idx +"')" );
 		elemdiv.appendChild(elemDownloadLink);
+
+		let elemChangebgLink = document.createElement('button');
+		elemChangebgLink.setAttribute("id", "btn_" + idx);
+		elemChangebgLink.setAttribute("class", "btn");
+		elemChangebgLink.innerText = "Change Background";
+		elemChangebgLink.setAttribute("onclick", "fnChangebg('img_status_" + idx +"')" );
+		elemdiv.appendChild(elemChangebgLink);
 
 		elemScont.appendChild(elemdiv);
 
@@ -302,6 +317,11 @@ async function fnExportasStatus(elemId) {
 				link.href = dataUrl;
 				link.click();
 			});
+}
+
+function fnChangebg(elemImgId) {
+	let elemimg = document.getElementById(elemImgId);
+	elemimg.setAttribute("src", imgsArr[getRandomIndex(imgsArr.length)]);
 }
 
 
