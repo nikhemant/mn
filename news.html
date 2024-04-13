@@ -198,6 +198,8 @@ function fnParse_mtext(val) {
 	for (let i = 0; i < val.length; i++) {
 		if(val[i] == "ÿ") //If char escaped using ÿ Sign U+00FF
 			htmltext += "<span class='Eng'>" + val[++i] + "</span>";
+		else if(val[i] == "\n")
+			htmltext += "<br>";
 		else
 			htmltext += "<span>" + val[i] + "</span>";
 	}

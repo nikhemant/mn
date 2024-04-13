@@ -319,6 +319,8 @@ function fnParse_mtext(val) {
 	for (let i = 0; i < val.length; i++) {
 		if(val[i] == "ÿ") //If char escaped using ÿ Sign U+00FF
 			htmltext += "<span class='Eng'>" + val[++i] + "</span>";
+		else if(val[i] == "\n")
+			htmltext += "<br>";
 		else
 			htmltext += "<span>" + val[i] + "</span>";
 	}
@@ -367,6 +369,20 @@ function fnChangebg(elemImgId) {
 	</div>
 	<button id="btn_user" class="btn" onclick="fnExportasStatus('div_cont_user')">Download Status</button>
 	<button id="btn_user" class="blink_me btn" onclick="fnChangebg('img_status_user')">Change Background</button>
+	<div>Font size: <select id="ddl_fontsize" style="padding-top: 5px; padding-bottom: 5px; display: inline;" onchange="javascript:document.getElementById('div_ml_user').style.fontSize = this.value">
+		<option value="larger">larger</option>
+		<option value="large" selected>large</option>
+		<option value="medium">medium</option>
+		<option value="small">small</option>
+		<option value="smaller">smaller</option>
+	  </select></div>
+ 	<div>Move Modi (up/down): <select id="ddl_fontsize" style="padding-top: 5px; padding-bottom: 5px; display: inline;" onchange="javascript:document.getElementById('div_ml_user').style.bottom = this.value">
+		<option value="60%">up+</option>
+		<option value="50%" selected>up</option>
+		<option value="40%">mid</option>
+		<option value="30%">down</option>
+		<option value="20%">down-</option>
+	  </select></div>
 </div>
 
 
