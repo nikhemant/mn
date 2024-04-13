@@ -130,8 +130,11 @@ async function BB_to_Modi(dtext){
 		}*/
 		htmltext += '<div style="font-size: 7px; color: gray; position:absolute; bottom:0px;" class="Eng">ModiNikam.com</div>';
 		document.getElementById("divoutputdiv").innerHTML = htmltext;	
+		
 		document.querySelector("#hdn_dntext").value = text;
 		document.querySelector("#hdn_mltext").value = val.mtext;
+		document.querySelector("#btnExportAsWAStatus").style.visibility = "visible"; 	
+		document.querySelector("#btnExportAsImage").style.visibility = "visible"; 
 	}
 	fnCreateScreenShotForExport();
 	fnPost(dtext, val.mtext, val.cf);
@@ -158,8 +161,6 @@ function fntype(e){
 	var val = "";
 	if(text.trim() == "") { alert("Please enter Devnagari/Marathi text -> convert to Modi -> and then click Export.") }
 	else { 
-		document.querySelector("#btnExportAsWAStatus").style.visibility = "visible"; 	
-		document.querySelector("#btnExportAsImage").style.visibility = "visible"; 
 		val = BB_to_Modi(text); 		
 	}
 }
@@ -202,8 +203,11 @@ function fnExportScreenShot() {
 
 function fnCreateStatusRedirect() {	
 	if(!document.getElementById('mlcanvas')) alert("Please enter text -> convert to Modi -> and then click Export.");
+	let dn = encodeURIComponent(document.querySelector("#hdn_dntext").value);
+	let ml = encodeURIComponent(document.querySelector("#hdn_mltext").value);
+	let link = "./status.html?dn="+ dn +"&ml=" + ml;
 	// similar behavior as clicking on a link
-	window.location.href = "./status.html?dn="+ document.querySelector("#hdn_dntext").value +"&ml=" + document.querySelector("#hdn_mltext").value;
+	window.location.href = link;
 }
 /*
 async function fnExportScreenShotasStatus() {
