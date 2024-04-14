@@ -211,46 +211,6 @@ function fnCreateStatusRedirect() {
 	// similar behavior as clicking on a link
 	window.location.href = link;
 }
-/*
-async function fnExportScreenShotasStatus() {
-	if(!document.getElementById('mlcanvas')) alert("Please enter text -> convert to Modi -> and then click Export.");
-
-	var mlcanvas = document.getElementById("mlcanvas")
-	var dncanvas = document.getElementById("dncanvas")
-
-	let mlwidth = mlcanvas.width, mlheight= mlcanvas.height;
-	let dnwidth = dncanvas.width, dnheight= dncanvas.height;
-	
-	var canvas = document.createElement('canvas');
-	canvas.id = "statuscanvas";
-	let t = (mlwidth > dnwidth ? mlwidth : dnwidth);
-	canvas.width = t + (t * 0.1); //10% extra
-	canvas.height = mlheight + dnheight + ((mlheight + dnheight) * 0.6); //60% extra
-	var ctx = canvas.getContext("2d");
-	const img = document.getElementById("imgStatusTemplate");
-	ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
-	//ctx.fillStyle = "rgba(219, 203, 170, 1)";
-	//ctx.fillRect(0, 0, canvas.width, canvas.height);
-	//document.body.appendChild(canvas)
-
-	let mlx = (t * 0.1)/2, mly = ((mlheight + dnheight) * 0.37);
-	let dnx = (t * 0.1)/2, dny = mlheight + ((mlheight + dnheight) * 0.5);
-
-	await mergeImages([
-		{ src: canvas.toDataURL(), x: 0, y: 0 },
-		{ src: mlcanvas.toDataURL(), x: mlx, y: mly, opacity: 0.9  },
-		{ src: dncanvas.toDataURL(), x: dnx, y: dny, opacity: 0.8 }
-	], {
-		//width: 432,  height: 768
-	})
-	.then(b64 => document.getElementById('imgStatus').src = b64); 
-
-	var download = document.createElement('a');
-	download.href = document.getElementById('imgStatus').src;
-	download.download = 'ModiNikam_status.png';
-	download.click();
-}
-*/
 
 function fnPost(seltext, mtext, cfinfo) {
 	cinfo = fn_GetClientInfo();
@@ -349,7 +309,6 @@ var info={
 
 </div>
 <img id="imgStatus" hidden/>
-<img id="imgStatusTemplate" src="imgs/mnstatustemplate.png" hidden/>
 <input type="hidden" id="hdn_dntext" value="">
 <input type="hidden" id="hdn_mltext" value="">
 <br>

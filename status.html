@@ -130,7 +130,7 @@ border: 1px solid; padding: 1%; margin: 1% 0; box-shadow: 3px 5px 3px 3px #88888
 /* Modilipi text */
 .container .text-blockml {
   position: absolute;
-  bottom: 50%;
+  bottom: 40%;
   right: 5%;
   background-color: rgba(28, 28, 28, 0.5);
   color: white;
@@ -186,6 +186,9 @@ window.onload = async function fnloadStatus() {
 		elemml.innerHTML = fnParse_mtext(mltext);
 		elemml.setAttribute("title", dntext);
 		document.getElementById("a_statuslink").style.visibility="visible";
+
+		const imglink = urlParams.get('img');
+		if(imglink) { document.getElementById('img_status_user').src = imglink;	}
 
 	} else {
 		document.getElementById("div_Scont_user").style.display="none";
@@ -264,6 +267,7 @@ function showResult(items){
 		elemblockml.setAttribute("id", "div_ml_" + idx);
 		elemblockml.setAttribute("class", "text-blockml ModiLipi");
 		elemblockml.innerHTML = fnParse_mtext(element.Status_ModiLipi);
+		elemblockml.setAttribute("mtext", element.Status_ModiLipi);
 		elemblockml.setAttribute("title", element.Status_Marathi);
 		elemcont.appendChild(elemblockml);
 		let blockdn = document.createElement('div');
@@ -279,18 +283,25 @@ function showResult(items){
 		elemdiv.appendChild(elemcont);
 		
 		let elemDownloadLink = document.createElement('button');
-		elemDownloadLink.setAttribute("id", "btn_" + idx);
+		elemDownloadLink.setAttribute("id", "btn_dwld_" + idx);
 		elemDownloadLink.setAttribute("class", "blink_me btn");
 		elemDownloadLink.innerText = "Download Status";
 		elemDownloadLink.setAttribute("onclick", "fnExportasStatus('div_cont_" + idx +"')" );
 		elemdiv.appendChild(elemDownloadLink);
 
 		let elemChangebgLink = document.createElement('button');
-		elemChangebgLink.setAttribute("id", "btn_" + idx);
+		elemChangebgLink.setAttribute("id", "btn_chgbg_" + idx);
 		elemChangebgLink.setAttribute("class", "btn");
 		elemChangebgLink.innerText = "Change Background";
 		elemChangebgLink.setAttribute("onclick", "fnChangebg('img_status_" + idx +"')" );
 		elemdiv.appendChild(elemChangebgLink);
+
+		let elemEditLink = document.createElement('button');
+		elemEditLink.setAttribute("id", "btn_edit_" + idx);
+		elemEditLink.setAttribute("class", "btn");
+		elemEditLink.innerText = "[Edit]";
+		elemEditLink.setAttribute("onclick", "fnCreateStatusRedirect('div_ml_" + idx +"', 'img_status_"+ idx +"')" );
+		elemdiv.appendChild(elemEditLink);
 
 		elemScont.appendChild(elemdiv);
 
@@ -329,7 +340,7 @@ function fnParse_mtext(val) {
 
 async function fnExportasStatus(elemId) {
 	let elem = document.getElementById(elemId);
-	await domtoimage.toJpeg(elem, { quality: 0.95, bgcolor: 'black' })
+	await domtoimage.toJpeg(elem, { quality: 1.0, bgcolor: 'black' })
 			.then(function (dataUrl) {
 				var link = document.createElement('a');
 				link.download = 'ModiNikam-Status.png';
@@ -343,6 +354,15 @@ function fnChangebg(elemImgId) {
 	elemimg.setAttribute("src", imgsArr[getRandomIndex(imgsArr.length)]);
 }
 
+function fnCreateStatusRedirect(elemname, elemimgname) {	
+	let elem = document.getElementById(elemname);
+	let elemimg = document.getElementById(elemimgname);
+	let dn = encodeURIComponent(elem.getAttribute("title"));
+	let ml = encodeURIComponent(elem.getAttribute("mtext"));
+	let link = "./status.html?dn="+ dn +"&ml=" + ml + "&img=" + encodeURIComponent(elemimg.src);
+	// similar behavior as clicking on a link
+	window.location.href = link;
+}
 
 </script>
 </head>
@@ -360,29 +380,34 @@ function fnChangebg(elemImgId) {
 &nbsp;&nbsp;&nbsp;<u><a href="./status.html" title="Whatsapp Status in Modi Lipi" style="visibility: hidden;" id = "a_statuslink">Whatsapp status in ModiLipi</a></u>
 <hr/>
 
-<div id="div_Scont_user">
+<div id="div_Scont_user" class="statuscontainer">
 	<div id="div_cont_user" class="container">
-		<img id="img_status_user" class="img-block" src="imgs/mnstatustemplate.png">
+		<img id="img_status_user" class="img-block" src="imgs/mnstatustemplate.jpg">
 		<div id="div_ml_user" class="text-blockml ModiLipi" title="Marathi/Devnagari Text"><span>Modilipi Text</span></div>
 		<div id="div_dn_user" class="text-blockdn">Marathi/Devnagari Text</div>
 		<div class="text-blockmn">ModiNikam.com</div>
 	</div>
+	<div>
 	<button id="btn_user" class="btn" onclick="fnExportasStatus('div_cont_user')">Download Status</button>
-	<button id="btn_user" class="blink_me btn" onclick="fnChangebg('img_status_user')">Change Background</button>
-	<div>Font size: <select id="ddl_fontsize" style="padding-top: 5px; padding-bottom: 5px; display: inline;" onchange="javascript:document.getElementById('div_ml_user').style.fontSize = this.value">
+	<button id="btn_user" class="btn" onclick="fnChangebg('img_status_user')">Change Background</button>
+	<div>ModiLipi font size: <select id="ddl_fontsize" style="padding-top: 5px; padding-bottom: 5px; display: inline;" onchange="javascript:document.getElementById('div_ml_user').style.fontSize = this.value">
+		<option value="x-large">x-large</option>
 		<option value="larger">larger</option>
 		<option value="large" selected>large</option>
 		<option value="medium">medium</option>
 		<option value="small">small</option>
 		<option value="smaller">smaller</option>
 	  </select></div>
- 	<div>Move Modi (up/down): <select id="ddl_fontsize" style="padding-top: 5px; padding-bottom: 5px; display: inline;" onchange="javascript:document.getElementById('div_ml_user').style.bottom = this.value">
+	<!--dynamically change stylesheet: document.styleSheets[1].cssRules[18].style.fontSize = "medium";
+	https://github.com/Frazer/dynamicallyAccessCSS.js
+	-->  
+ 	<div>Move ModiLipi Text (up/down): <select id="ddl_fontsize" style="padding-top: 5px; padding-bottom: 5px; display: inline;" onchange="javascript:document.getElementById('div_ml_user').style.bottom = this.value">
 		<option value="60%">up+</option>
-		<option value="50%" selected>up</option>
-		<option value="40%">mid</option>
+		<option value="50%">up</option>
+		<option value="40%" selected>mid</option>
 		<option value="30%">down</option>
 		<option value="20%">down-</option>
-	  </select></div>
+	  </select></div></div>
 </div>
 
 
