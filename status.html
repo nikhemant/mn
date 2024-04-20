@@ -292,7 +292,7 @@ function showResult(items){
 		let elemChangebgLink = document.createElement('button');
 		elemChangebgLink.setAttribute("id", "btn_chgbg_" + idx);
 		elemChangebgLink.setAttribute("class", "btn");
-		elemChangebgLink.innerText = "Change Background";
+		elemChangebgLink.innerText = "Random Background";
 		elemChangebgLink.setAttribute("onclick", "fnChangebg('img_status_" + idx +"')" );
 		elemdiv.appendChild(elemChangebgLink);
 
@@ -364,6 +364,27 @@ function fnCreateStatusRedirect(elemname, elemimgname) {
 	window.location.href = link;
 }
 
+function fnSetBgUserImage(event, elemimgname) {
+	var input = event.target;
+	let image = document.getElementById(elemimgname);
+	//var image = document.getElementById('preview');
+	if (input.files && input.files[0]) {
+		var reader = new FileReader();
+		reader.onload = function(e) {
+			image.src = e.target.result;
+			image.style.width = "auto";
+			image.style.height = "auto";
+			document.getElementById("btn_FitImage").style.visibility = "visible";
+		}
+		reader.readAsDataURL(input.files[0]);
+	}
+}
+
+function fnFitImage(elemimgname){
+	let image = document.getElementById(elemimgname);
+			image.style.width = "330px";
+			image.style.height = "495px";
+}
 </script>
 </head>
 <body>
@@ -388,26 +409,36 @@ function fnCreateStatusRedirect(elemname, elemimgname) {
 		<div class="text-blockmn">ModiNikam.com</div>
 	</div>
 	<div>
-	<button id="btn_user" class="btn" onclick="fnExportasStatus('div_cont_user')">Download Status</button>
-	<button id="btn_user" class="btn" onclick="fnChangebg('img_status_user')">Change Background</button>
-	<div>ModiLipi font size: <select id="ddl_fontsize" style="padding-top: 5px; padding-bottom: 5px; display: inline;" onchange="javascript:document.getElementById('div_ml_user').style.fontSize = this.value">
-		<option value="x-large">x-large</option>
-		<option value="larger">larger</option>
-		<option value="large" selected>large</option>
-		<option value="medium">medium</option>
-		<option value="small">small</option>
-		<option value="smaller">smaller</option>
-	  </select></div>
-	<!--dynamically change stylesheet: document.styleSheets[1].cssRules[18].style.fontSize = "medium";
-	https://github.com/Frazer/dynamicallyAccessCSS.js
-	-->  
- 	<div>Move ModiLipi Text (up/down): <select id="ddl_fontsize" style="padding-top: 5px; padding-bottom: 5px; display: inline;" onchange="javascript:document.getElementById('div_ml_user').style.bottom = this.value">
-		<option value="60%">up+</option>
-		<option value="50%">up</option>
-		<option value="40%" selected>mid</option>
-		<option value="30%">down</option>
-		<option value="20%">down-</option>
-	  </select></div></div>
+		<button id="btn_user" class="btn" onclick="fnExportasStatus('div_cont_user')">Download Status</button>
+		<button id="btn_user" class="btn" onclick="fnChangebg('img_status_user')">Random Background</button>
+		<div>
+			ModiLipi font size: 
+			<select id="ddl_fontsize" style="padding-top: 5px; padding-bottom: 5px; display: inline;" onchange="javascript:document.getElementById('div_ml_user').style.fontSize = this.value">
+				<option value="x-large">x-large</option>
+				<option value="larger">larger</option>
+				<option value="large" selected>large</option>
+				<option value="medium">medium</option>
+				<option value="small">small</option>
+				<option value="smaller">smaller</option>
+			</select>
+		</div>
+		<!--dynamically change stylesheet: document.styleSheets[1].cssRules[18].style.fontSize = "medium";
+		https://github.com/Frazer/dynamicallyAccessCSS.js
+		-->  
+		<div>
+			Move ModiLipi Text (up/down): 
+			<select id="ddl_fontsize" style="padding-top: 5px; padding-bottom: 5px; display: inline;" onchange="javascript:document.getElementById('div_ml_user').style.bottom = this.value">
+				<option value="60%">up+</option>
+				<option value="50%">up</option>
+				<option value="40%" selected>mid</option>
+				<option value="30%">down</option>
+				<option value="20%">down-</option>
+			</select>
+		</div>	
+		Custom Background Image: 
+		<input type="file" accept="image/*" onchange="fnSetBgUserImage(event, 'img_status_user')" />
+		<button id="btn_FitImage" class="btn blink_me" onclick="fnFitImage('img_status_user')" style="visibility:hidden;">Fit/Stretch Image </button>
+	</div>
 </div>
 
 
