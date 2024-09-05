@@ -279,14 +279,26 @@ var info={
 <div style="display: flex;">
 <div><img style="margin-top: 1em; min-width: 100px;" src="ModiNikam-Logo-tl.png" title="ModiNikam" alt="ModiNikam - Convert Devnagari to Modi Lipi" width="137" height="120"/></div>
 <div><h2 style="margin: 1em;">Marathi (Devnagari) to Modi Lipi - मराठी बाळबोध (देवनागरी) ते मोडी लिपी</h2>
-	<div style="text-align: center;">❤️ Like us on <a href="https://www.facebook.com/ModiNikam/">facebook</a>!</div>
+	<center>
+		<style>
+			.WordClockWidget {
+				border: 0.1em solid black;
+				border-radius: 0.5em;
+				width: 95%;
+				font-weight:bold;
+				font-size: small;
+			}
+		</style>
+		<div id="MarathiClockWidget"></div>
+		<script src="https://cdn.jsdelivr.net/gh/nikhemant/RegionalWordClock@main/widget/WordClockWidget.js" data-lang="mr" data-elemid="MarathiClockWidget" data-css="inline"></script>
+	</center>
 </div>
 </div>
 <!--	<h2><u><a class="blink_me" href="https://modinikam.com/news.html" title="Latest news in Modi Lipi">📰 वाचा ताज्या ठळक बातम्या मोडी लिपी मधे 📰</a></u></h2>-->
 <hr/>
 <u><a class="" href="./modilipi_information.html" title="About Modi Lipi">About ModiLipi</a></u>		&nbsp;&nbsp;&nbsp;
 <u><a class="" href="./news.html" title="Latest news in Modi Lipi">News in ModiLipi</a></u>		&nbsp;&nbsp;&nbsp;
-<u><a class="blink_me" href="./status.html" title="Whatsapp Status in Modi Lipi">Whatsapp status in ModiLipi</a></u>
+<u><a class="" href="./status.html" title="Whatsapp Status in Modi Lipi">Whatsapp status in ModiLipi</a></u>
 <hr/>
 <!-- <input type="text" id="txtBBtoModi1" name="txtBBtoModi1"> -->
 <b>Enter text in <u>Marathi/Devnagari</u> and click on Convert button:</b><br/>
@@ -296,6 +308,7 @@ var info={
 <input type="button" value="Convert to Modi Lipi" class="btn" onclick="fntype(this)"/>
 <a id="anchorID" href="https://docs.google.com/forms/d/e/1FAIpQLSdNrUSqCv-diiabGHxE-hCnDGxjWoUKZq0Yp4PIJwQ0t3Wa-g/viewform" target="_blank">Feedback/Suggestions (तुमचा प्रतिसाद कळवा) -&gt; </a>
 </div>
+❤️ Like us on <a href="https://www.facebook.com/ModiNikam/">facebook</a>!
 <!--<input type="button" value="Clear" onclick="fnClr()"/> -->
 <br/>
 <hr/>
@@ -316,12 +329,11 @@ var info={
 <fieldset style="text-align: center; border: 1px 1px;">
 	💸💸💸 आमच्या प्रयत्नांना दाद म्हणून आणि मोडी लिपी वरील संशोधन सुरु ठेवण्यासाठी आपले अमूल्य योगदान प्रार्थनीय आहे.
 	<br>
-	<img src="imgs/upi.png" width="200"/> <br> 
 	<img src="imgs/upi_logo_icon.png" width="50"/>
-		<a class="btn blink_me" href="upi://pay?pa=nikhemant@okhdfcbank&amp;pn=ModiNikam&amp;cu=INR">
-			Donate via UPI
-		</a>
-	<br><br>
+	<a class="btn blink_me" href="upi://pay?pa=nikhemant@okhdfcbank&amp;pn=ModiNikam&amp;cu=INR">
+		Donate via UPI
+	</a><br>
+	<img src="imgs/upi.png" width="200"/> <br> 
 	<a class="btn" href="https://pages.razorpay.com/ModiNikam/">Donate via Cards, Netbanking, etc.</a>
 </fieldset>
 
