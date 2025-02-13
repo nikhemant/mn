@@ -101,6 +101,33 @@ h3 { text-align: center; padding: 0.1em; margin: 0;}
 	border: 1px solid gray;
 }
 
+/* Tab buttons */
+.tab-buttons {
+	display: flex;
+	gap: 5px;
+	margin-bottom: 10px;
+}
+.tab-buttons button {
+	flex: 1;
+	padding: 10px;
+	cursor: pointer;
+	border: none;
+	background: #ddd;
+}
+.tab-buttons button.active {
+	background: #007bff;
+	color: white;
+}
+
+/* Tab content */
+.tab-content {
+	display: none;
+}
+.tab-content.active {
+	display: block;
+}
+		
+
 </style>
 <meta name="viewport" content="width=device-width">
 <script>
@@ -159,7 +186,17 @@ function fnParse_mtext(val) {
 
 function fntype(e){
 	//alert(e.value);
-	text = document.getElementById('txtBBtoModi').value;
+	let btnid = "";
+	document.querySelectorAll(".tab-btn").forEach(btn => {
+			if(btn.classList.contains("active"))
+				btnid = btn.id;
+			// console.log(btn.classList.contains("active"));
+		});
+	if(btnid == "MarathiTyping")
+		text = document.getElementById('txtBBtoModi').value; //transliterateTextBox  depending on which tab is active
+	else 
+		text = document.getElementById('transliterateTextBox').value; //transliterateTextBox  depending on which tab is active
+	console.log(text);
 	var val = "";
 	if(text.trim() == "") { alert("Please enter Devnagari/Marathi text -> convert to Modi -> and then click Export.") }
 	else { 
@@ -303,9 +340,20 @@ var info={
 <hr/>
 <!-- <input type="text" id="txtBBtoModi1" name="txtBBtoModi1"> -->
 <b>Enter text in <u>Marathi/Devnagari</u> and click on Convert button:</b><br/>
-<textarea id="txtBBtoModi" name="txtBBtoModi1" rows="3" cols="37" placeholder="मराठी मधे टाईप करा. (Please type in Marathi.)"></textarea>
-<div id="divoptionscontainer"></div>
-<div id="divoutput" style="width: 10px; height: 10px; display: none;"></div>
+
+<!-- Tab Buttons -->
+<div class="tab-buttons">
+	<button id="MarathiTyping" class="tab-btn active" onclick="openTab(event, 'tab1')">Type in Marathi</button>
+	<button id="EnglishTyping" class="tab-btn" onclick="openTab(event, 'tab2')">Type in English</button>
+</div>
+<div id="tab1" class="tab-content active">
+	<textarea id="txtBBtoModi" name="txtBBtoModi1" rows="3" cols="37" placeholder="मराठी मधे टाईप करा. (Please type in Marathi.)"></textarea>
+</div>
+<div id="tab2" class="tab-content">
+	<textarea id="transliterateTextBox" name="transliterateTextBox" rows="3" cols="37" placeholder="English will be converted to Marathi."></textarea>
+	<div id="divoptionscontainer"></div>
+	<div id="divoutput" style="width: 10px; height: 10px; display: none;"></div>
+</div>
 
 <div class="row">
 <input type="button" value="Convert to Modi Lipi" class="btn" onclick="fntype(this)"/>
@@ -346,14 +394,30 @@ email: modinikam@gmail.com</p>
 
 <br/>
 
+<script>
+	function openTab(event, tabId) {
+		// Hide all tab contents
+		document.querySelectorAll(".tab-content").forEach(tab => {
+			tab.classList.remove("active");
+		});
 
+		// Remove active class from all buttons
+		document.querySelectorAll(".tab-btn").forEach(btn => {
+			btn.classList.remove("active");
+		});
+
+		// Show selected tab and highlight button
+		document.getElementById(tabId).classList.add("active");
+		event.currentTarget.classList.add("active");
+	}
+</script>
 
 <script>
     let backspaceflag = 0;
     let pasteflag = 0;
     let lastValue = "";  //to detect backspace on mobile
     const divoptionscontainer = document.getElementById("divoptionscontainer");
-    const transliterateTextBox = document.getElementById('txtBBtoModi');
+    const transliterateTextBox = document.getElementById('transliterateTextBox');
     const divoutput = document.getElementById('divoutput');
     
     transliterateTextBox.addEventListener("keydown", function(event) {
