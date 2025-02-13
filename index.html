@@ -351,6 +351,7 @@ email: modinikam@gmail.com</p>
 <script>
     let backspaceflag = 0;
     let pasteflag = 0;
+    let lastValue = "";  //to detect backspace on mobile
     const divoptionscontainer = document.getElementById("divoptionscontainer");
     const transliterateTextBox = document.getElementById('txtBBtoModi');
     const divoutput = document.getElementById('divoutput');
@@ -371,15 +372,16 @@ email: modinikam@gmail.com</p>
         let pasteData = event.clipboardData.getData("text");
         // Display the pasted text
         // document.getElementById("pastedText").textContent = pasteData;
-        // console.log("Pasted content:", pasteData);
+        console.log("Pasted content:", pasteData);
     });
 
     transliterateTextBox.addEventListener('input', function(event) {
-      if(backspaceflag) {
+      if(backspaceflag == 1 || transliterateTextBox.value.length < lastValue.length) {
         // Remove last character manually
         divoutput.innerText = transliterateTextBox.value; //divoutput.innerText.slice(0, -1);
         // return;
       }
+      lastValue = this.value; 
       var text = this.value;
 
       if( pasteflag == 1) {
@@ -395,7 +397,7 @@ email: modinikam@gmail.com</p>
             transliterateTextBox.value = divoutput.textContent; 
           })
         .catch(error => console.error('Error:', error));
-        // console.log(text);
+        console.log(text);
         pasteflag = 0;
         return;
       }
