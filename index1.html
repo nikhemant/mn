@@ -1,0 +1,475 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8" />
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-FD4S6PDJ05"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-FD4S6PDJ05');
+</script>	
+
+<!-- Primary Meta Tags -->
+<title>ModiNikam - Convert Devnagari to Modi Lipi</title>
+<meta name="title" content="ModiNikam - Convert Devnagari to Modi Lipi">
+<meta name="description" content="Free online tool to convert any text from Marathi language in Devnagari/Balbodh script to Modi Lipi">
+<meta name="keywords" content="Modi Lipi, Modi Script, Modi Lipi Converter, Convert to Modi Lipi, Convert to Modi Script, Devnagari to Modi Lipi, Marathi to Modi Lipi, Balbodh to Modi Lipi">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<!-- Open Graph / Facebook -->
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://modinikam.com/">
+<meta property="og:title" content="ModiNikam - Convert Devnagari to Modi Lipi">
+<meta property="og:description" content="Free online tool to convert any text from Marathi language in Devnagari/Balbodh script to Modi Lipi">
+<meta property="og:image" content="https://modinikam.com/ModiNikam-Logo-tl.png">
+
+<!-- Twitter -->
+<meta property="twitter:card" content="summary_large_image">
+<meta property="twitter:url" content="https://modinikam.com/">
+<meta property="twitter:title" content="ModiNikam - Convert Devnagari to Modi Lipi">
+<meta property="twitter:description" content="Free online tool to convert any text from Marathi language in Devnagari/Balbodh script to Modi Lipi">
+<meta property="twitter:image" content="https://modinikam.com/ModiNikam-Logo-tl.png">
+
+<link rel="icon" type="image/png" sizes="32x32" href="favicon-32x32.png">
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+<!-- <script src="https://unpkg.com/merge-images"></script> -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/water.css@2/out/light.css">
+
+<style>
+@font-face {
+    font-family: ModiNikam;
+    src:url("ModiNikam-Regular.otf");
+}
+
+.ModiLipi{
+    font-family: ModiNikam;
+	width: 100%;
+	max-width: 100%;
+	margin: auto;
+}
+
+.Eng{
+	color:black;
+	font-family: Arial, Helvetica, sans-serif;
+	width: 100%;
+	max-width: 100%;
+	margin: auto;
+}
+
+.outputdiv{
+	min-height:73px; 
+	height:auto;
+	width:300px; 
+	background:#dbcbaa; 
+	word-wrap:break-word; 
+	line-height: 173%; 
+	position:relative; 
+	padding:15px;
+}
+
+textarea {
+	width: 95%;
+	max-width: 100%;
+}
+h1 { text-align: center; padding: 0; margin: 0;}
+h2 { text-align: center; padding: 0.1em; margin: 0; font-size: 1.1em;}
+h3 { text-align: center; padding: 0.1em; margin: 0;}
+
+.blink_me {
+  animation: blinker 1s linear infinite;
+}
+@keyframes blinker {
+  50% {
+    opacity: 0;
+  }
+}
+
+.row {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.btn{
+	padding: 5px;
+	border-radius: 7px;
+	border: 1px solid gray;
+}
+
+</style>
+<meta name="viewport" content="width=device-width">
+<script>
+
+//https://modinikam.nikhemant.workers.dev/?d=देवनागरी
+async function BB_to_Modi(dtext){
+	let url = "https://modinikam.nikhemant.workers.dev/?d="
+	url = url + encodeURIComponent(dtext.trim());
+    const response = await fetch(url,{mode: 'cors'});
+    var val = await response.json();
+	//console.log( val);
+		
+	//alert(JSON.stringify(val.cf))
+	if(val.mtext.startsWith("Overflow")) {
+		alert("Please fill the google form to convert longer text. \nClick 'Want to convert longer text?' link on the page.")
+	}	
+	else {
+		//val1 = val.mtext;
+		let htmltext = "";
+		htmltext = fnParse_mtext(val.mtext)
+		/*
+		for (let i = 0; i < val1.length; i++) {
+			if(val1[i] == "ÿ") //If char escaped using (meaning english char) ÿ Sign U+00FF
+				htmltext += "<span class='Eng'>" + val1[++i] + "</span>";
+			else
+				htmltext += "<span>" + val1[i] + "</span>";
+		}*/
+		htmltext += '<div style="font-size: 7px; color: gray; position:absolute; bottom:0px;" class="Eng">ModiNikam.com</div>';
+		document.getElementById("divoutputdiv").innerHTML = htmltext;	
+		
+		document.querySelector("#hdn_dntext").value = text;
+		document.querySelector("#hdn_mltext").value = val.mtext;
+		document.querySelector("#btnExportAsWAStatus").style.visibility = "visible"; 	
+		document.querySelector("#btnExportAsImage").style.visibility = "visible"; 
+	}
+	fnCreateScreenShotForExport();
+	fnPost(dtext, val.mtext, val.cf);
+	return val.mtext;
+}
+
+function fnParse_mtext(val) {
+	let htmltext = "";
+	
+	if(val == undefined) return "";
+
+	for (let i = 0; i < val.length; i++) {
+		if(val[i] == "ÿ") //If char escaped using ÿ Sign U+00FF
+			htmltext += "<span class='Eng'>" + val[++i] + "</span>";
+		else if(val[i] == "\n")
+			htmltext += "<br>";
+		else
+			htmltext += "<span>" + val[i] + "</span>";
+	}
+	return(htmltext);
+}
+
+function fntype(e){
+	//alert(e.value);
+	text = document.getElementById('txtBBtoModi').value;
+	var val = "";
+	if(text.trim() == "") { alert("Please enter Devnagari/Marathi text -> convert to Modi -> and then click Export.") }
+	else { 
+		val = BB_to_Modi(text); 		
+	}
+}
+
+function fnCreateScreenShotForExport() {
+	if(document.getElementById('mlcanvas')) //modilipi canvas
+		document.body.removeChild(document.getElementById('mlcanvas'))
+
+	document.querySelector("#divoutputdiv").hidden = false; //because hidden div is not converted to canvas
+	if(document.querySelector("#divoutputdiv").innerText != "")
+		html2canvas(document.querySelector("#divoutputdiv")).then(canvas => {
+			canvas.id = "mlcanvas"
+			canvas.hidden = "hidden"
+			document.body.appendChild(canvas)
+		});
+
+
+	if(document.getElementById('dncanvas')) //devnagari source canvas
+		document.body.removeChild(document.getElementById('dncanvas'))
+		
+	document.querySelector("#divsourcetext").innerText = document.getElementById('txtBBtoModi').value;
+	document.querySelector("#divsourcetext").hidden = false; //because hidden div is not converted to canvas
+	if(document.querySelector("#divsourcetext").innerText != "")
+		html2canvas(document.querySelector("#divsourcetext")).then(canvas => {
+			canvas.id = "dncanvas"
+			canvas.hidden = "hidden"
+			document.body.appendChild(canvas)
+		});				
+	document.querySelector("#divsourcetext").hidden = true;
+}
+
+function fnExportScreenShot() {
+	if(!document.getElementById('mlcanvas')) alert("Please enter text -> convert to Modi -> and then click Export.")
+	img = document.getElementById('mlcanvas').toDataURL('image/png');
+	var download = document.createElement('a');
+	download.href = img;
+	download.download = 'ModiNikam.png';
+	download.click();
+}
+
+function fnCreateStatusRedirect() {	
+	if(!document.getElementById('mlcanvas')) alert("Please enter text -> convert to Modi -> and then click Export.");
+	let dn = encodeURIComponent(document.querySelector("#hdn_dntext").value);
+	let ml = encodeURIComponent(document.querySelector("#hdn_mltext").value);
+	let link = "./status.html?dn="+ dn +"&ml=" + ml;
+	// similar behavior as clicking on a link
+	window.location.href = link;
+}
+
+function fnPost(seltext, mtext, cfinfo) {
+	cinfo = fn_GetClientInfo();
+	var cinfo_jsons = new Array();
+	cinfo_jsons.push(JSON.stringify(cfinfo));
+	cinfo_jsons.push(cinfo);
+	//seltext = seltext + " -###- " + mtext;
+	if (typeof mtext.length == 'undefined')
+		email = 'mn@modinikam.com'
+	else
+		email = 'mn+' + mtext.length + '-' + cfinfo.country + '-' + cfinfo.city + '-' + cfinfo.colo + '@modinikam.com'
+
+	//alert(info);
+	//let glink = "https://docs.google.com/forms/d/e/1FAIpQLSdNrUSqCv-diiabGHxE-hCnDGxjWoUKZq0Yp4PIJwQ0t3Wa-g/formResponse?entry.651182113=test1110&entry.379875292=test111&emailAddress=test111%40test.com"
+	let glink = "https://docs.google.com/forms/d/e/1FAIpQLSdNrUSqCv-diiabGHxE-hCnDGxjWoUKZq0Yp4PIJwQ0t3Wa-g/formResponse?"
+	glink = glink + "entry.651182113=" + seltext + "&entry.379875292=" + "temp" + "&emailAddress=" + cfinfo.city.replace(" ", "") + '@modinikam.com'
+	try{
+		fetch(glink, {
+			method: 'POST',
+			headers:{
+			  'Content-Type': 'application/x-www-form-urlencoded'
+			}
+		})
+		  .then(response => {
+			// Do stuff with the response
+			console.log(response);
+		  });
+	} catch (e) {
+		console.log(e.message);
+	}	  
+}
+	  
+
+function fn_GetClientInfo() {	  
+var info={
+    timeOpened:new Date(),
+    timezone:(new Date()).getTimezoneOffset()/60,
+	};		
+	
+	if(typeof navigator != 'undefined') {
+		info.browserName=( typeof  navigator.appName == 'undefined'? '' : navigator.appName);
+		info.browserEngine=( typeof  navigator.product == 'undefined'? '' : navigator.product);
+		info.browserVersion1a=( typeof  navigator.appVersion == 'undefined'? '' : navigator.appVersion);
+		info.browserUserAgent=( typeof  navigator.userAgent == 'undefined'? '' : navigator.userAgent);
+		info.browserLanguage=( typeof  navigator.language == 'undefined'? '' : navigator.language);
+		info.browserOnline=( typeof  navigator.onLine == 'undefined'? '' : navigator.onLine);
+		info.browserPlatform=( typeof  navigator.platform == 'undefined'? '' : navigator.platform);
+		info.dataCookiesEnabled=( typeof navigator.cookieEnabled == 'undefined'? '' : navigator.cookieEnabled);
+		}
+	if(typeof screen != 'undefined') {
+		info.sizeScreenW=( typeof  screen.width == 'undefined'? '' : screen.width);
+		info.sizeScreenH=( typeof  screen.height == 'undefined'? '' : screen.height);
+		info.sizeAvailW=( typeof  screen.availWidth == 'undefined'? '' : screen.availWidth);
+		info.sizeAvailH=( typeof  screen.availHeight == 'undefined'? '' : screen.availHeight);
+		info.scrColorDepth=( typeof  screen.colorDepth == 'undefined'? '' : screen.colorDepth);
+		info.scrPixelDepth=( typeof  screen.pixelDepth == 'undefined'? '' : screen.pixelDepth);
+		}	
+	return(JSON.stringify(info));
+}	  
+
+</script>
+</head>
+
+
+<body>
+<div style="display: flex;">
+<div><img style="margin-top: 1em; min-width: 100px;" src="ModiNikam-Logo-tl.png" title="ModiNikam" alt="ModiNikam - Convert Devnagari to Modi Lipi" width="137" height="120"/></div>
+<div><h2 style="margin: 1em;">Marathi (Devnagari) to Modi Lipi - मराठी बाळबोध (देवनागरी) ते मोडी लिपी</h2>
+	<center>
+		<style>
+			.WordClockWidget {
+				border: 0.1em solid black;
+				border-radius: 0.5em;
+				width: 95%;
+				font-weight:bold;
+				font-size: small;
+			}
+		</style>
+		<div id="MarathiClockWidget"></div>
+		<script src="https://cdn.jsdelivr.net/gh/nikhemant/RegionalWordClock@main/widget/WordClockWidget.js" data-lang="mr" data-elemid="MarathiClockWidget" data-css="inline"></script>
+	</center>
+</div>
+</div>
+<!--	<h2><u><a class="blink_me" href="https://modinikam.com/news.html" title="Latest news in Modi Lipi">📰 वाचा ताज्या ठळक बातम्या मोडी लिपी मधे 📰</a></u></h2>-->
+<hr/>
+<u><a class="" href="./modilipi_information.html" title="About Modi Lipi">About ModiLipi</a></u>		&nbsp;&nbsp;&nbsp;
+<u><a class="" href="./news.html" title="Latest news in Modi Lipi">News in ModiLipi</a></u>		&nbsp;&nbsp;&nbsp;
+<u><a class="" href="./status.html" title="Whatsapp Status in Modi Lipi">Whatsapp status in ModiLipi</a></u>
+<u><a class="blink_me" href="https://forte24.in/products/modi-lipi-t-shirt?ta_aff=YB7CIIWLUK" target="_blank" title="Buy Official ModiNikam Merchandise!" id="dialog-trigger">Buy Official ModiNikam Merchandise!</a></u>
+<hr/>
+<!-- <input type="text" id="txtBBtoModi1" name="txtBBtoModi1"> -->
+<b>Enter text in <u>Marathi/Devnagari</u> and click on Convert button:</b><br/>
+<textarea id="txtBBtoModi" name="txtBBtoModi1" rows="3" cols="37" placeholder="मराठी मधे टाईप करा. (Please type in Marathi.)"></textarea>
+<div id="divoptionscontainer"></div>
+<div id="divoutput" style="width: 10px; height: 10px; display: none;"></div>
+
+<div class="row">
+<input type="button" value="Convert to Modi Lipi" class="btn" onclick="fntype(this)"/>
+<a id="anchorID" href="https://docs.google.com/forms/d/e/1FAIpQLSdNrUSqCv-diiabGHxE-hCnDGxjWoUKZq0Yp4PIJwQ0t3Wa-g/viewform" target="_blank">Feedback/Suggestions (तुमचा प्रतिसाद कळवा) -&gt; </a>
+</div>
+❤️ Like us on <a href="https://www.facebook.com/ModiNikam/">facebook</a>!
+<!--<input type="button" value="Clear" onclick="fnClr()"/> -->
+<br/>
+<hr/>
+<div id="divoutputdiv" class="ModiLipi outputdiv" hidden>
+	<div style="font-size: 7px; color: gray; position:absolute; bottom:0px;" class="Eng">ModiNikam.com</div>
+</div>
+<div id="divsourcetext" class="outputdiv" hidden></div>
+<hr/>
+<div class="row">
+<input id="btnExportAsImage" type="button" value="Export as Image >>" class="btn" onclick="fnExportScreenShot(this)" style="visibility: hidden;"  />
+<input id="btnExportAsWAStatus" type="button" value="Create Whatsapp Status >>" class="btn blink_me" onclick="fnCreateStatusRedirect(this)" style="visibility: hidden;" />
+
+</div>
+<img id="imgStatus" hidden/>
+<input type="hidden" id="hdn_dntext" value="">
+<input type="hidden" id="hdn_mltext" value="">
+<br>
+<fieldset style="text-align: center; border: 1px 1px;">
+	💸💸💸 आमच्या प्रयत्नांना दाद म्हणून आणि मोडी लिपी वरील संशोधन सुरु ठेवण्यासाठी आपले अमूल्य योगदान प्रार्थनीय आहे.
+	<br>
+	<img src="imgs/upi_logo_icon.png" width="50"/>
+	<a class="btn blink_me" href="upi://pay?pa=nikhemant@okhdfcbank&amp;pn=ModiNikam&amp;cu=INR">
+		Donate via UPI
+	</a><br>
+	<img src="imgs/upi.png" width="200"/> <br> 
+	<a class="btn" href="https://pages.razorpay.com/ModiNikam/">Donate via Cards, Netbanking, etc.</a>
+</fieldset>
+
+<p style="text-align: center; font-size:0.7em;">जय हिंद जय महाराष्ट्र<br/>&copy; 2024 ModiNikam. All Rights Reserved.<br/>
+email: modinikam@gmail.com</p>
+
+
+<br/>
+
+
+
+<script>
+    let backspaceflag = 0;
+    let pasteflag = 0;
+    let lastValue = "";  //to detect backspace on mobile
+    const divoptionscontainer = document.getElementById("divoptionscontainer");
+    const transliterateTextBox = document.getElementById('txtBBtoModi');
+    const divoutput = document.getElementById('divoutput');
+    
+    transliterateTextBox.addEventListener("keydown", function(event) {
+      if (event.key === "Backspace") {
+          // document.getElementById("transliterateTextBox").value = "Backspace was pressed!";
+          backspaceflag = 1;
+      } else {
+          // document.getElementById("transliterateTextBox").value = "";
+          backspaceflag = 0;
+      }
+    });
+
+    transliterateTextBox.addEventListener("paste", function(event) {
+        pasteflag = 1;
+        // Get clipboard data
+        let pasteData = event.clipboardData.getData("text");
+        // Display the pasted text
+        // document.getElementById("pastedText").textContent = pasteData;
+        console.log("Pasted content:", pasteData);
+    });
+
+    transliterateTextBox.addEventListener('input', function(event) {
+      if(backspaceflag == 1 || transliterateTextBox.value.length < lastValue.length) {
+        // Remove last character manually
+        divoutput.innerText = transliterateTextBox.value; //divoutput.innerText.slice(0, -1);
+        // return;
+      }
+      lastValue = this.value; 
+      var text = this.value;
+
+      if( pasteflag == 1) {
+        //do full transliterate and return     
+        var url = 'https://www.google.com/inputtools/request?text=' + encodeURIComponent(text) + '&ime=transliteration_en_mr&num=1';
+        fetch(url)
+          .then(response => response.json())
+          .then(data => {
+            var transliteratedText = data[1][0][1][0];
+            // document.getElementById('outputTextBox').textContent = transliteratedText;
+            divoptionscontainer.innerHTML = "";
+            divoutput.textContent = transliteratedText
+            transliterateTextBox.value = divoutput.textContent; 
+          })
+        .catch(error => console.error('Error:', error));
+        console.log(text);
+        pasteflag = 0;
+        return;
+      }
+
+
+      let split = text.replace("\n"," ").split(" ");
+      // console.log(split, split.length)
+      // console.log(split[split.length-1])
+      let querytext = split[split.length-1];
+      if (querytext.trim().length > 0) {
+      // if (querytext != " ") { 
+        var url = 'https://www.google.com/inputtools/request?text=' + encodeURIComponent(querytext) + '&ime=transliteration_en_mr&num=5';
+        
+        fetch(url)
+          .then(response => response.json())
+          .then(data => {
+
+            add_opptions(data);
+            append_trans_text(data[1][0][1][0]);
+
+          })
+          .catch(error => console.error('Error:', error));
+      } else {
+        divoptionscontainer.innerHTML = "";
+        if(backspaceflag) {
+          divoutput.textContent = divoutput.textContent;
+        }
+        else {
+          // if (transliterateTextBox.value.startsWith(divoutput.textContent)) //if copy pasted
+            divoutput.textContent = divoutput.textContent + " ";
+          // else
+          //   divoutput.textContent = transliterateTextBox.value;
+        }
+        transliterateTextBox.value = divoutput.textContent; 
+      }
+    });
+
+    function append_trans_text(transliteratedText) {
+      //var transliteratedText = data[1][0][1][0];
+      // console.log(transliteratedText);
+      let existingtext = divoutput.textContent;
+      let existingtextsplit = existingtext.split(" ");
+      let existingtextlastword = existingtextsplit[existingtextsplit.length-1];
+      
+      existingtextsplit[existingtextsplit.length-1] = transliteratedText;
+      divoutput.textContent =  existingtextsplit.join(" ");
+      // console.log(existingtextsplit);            
+    }
+
+    function add_opptions(data) {      
+      let options = data[1][0][1];
+      divoptionscontainer.innerHTML = "";
+      for (let option of options) {
+          // console.log(option);
+          let newButton = document.createElement("button");
+          newButton.innerHTML = option;
+          newButton.style.margin = "5px";
+          newButton.onclick = function() {
+              // alert("You clicked " + newButton.innerHTML);
+              transliterateTextBox.value += " "; 
+              transliterateTextBox.focus();
+              append_trans_text(newButton.innerHTML + " ");
+              
+              divoptionscontainer.innerHTML = "";
+              transliterateTextBox.value = divoutput.textContent; 
+          };
+
+          // Append the button to the container
+          divoptionscontainer.appendChild(newButton);
+      }
+    }
+  </script>
+
+</body>
+</html>
