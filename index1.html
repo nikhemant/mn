@@ -336,7 +336,6 @@ var info={
 <u><a class="" href="./modilipi_information.html" title="About Modi Lipi">About ModiLipi</a></u>		&nbsp;&nbsp;&nbsp;
 <u><a class="" href="./news.html" title="Latest news in Modi Lipi">News in ModiLipi</a></u>		&nbsp;&nbsp;&nbsp;
 <u><a class="" href="./status.html" title="Whatsapp Status in Modi Lipi">Whatsapp status in ModiLipi</a></u>
-<u><a class="blink_me" href="https://forte24.in/products/modi-lipi-t-shirt?ta_aff=YB7CIIWLUK" target="_blank" title="Buy Official ModiNikam Merchandise!" id="dialog-trigger">Buy Official ModiNikam Merchandise!</a></u>
 <hr/>
 <!-- <input type="text" id="txtBBtoModi1" name="txtBBtoModi1"> -->
 <b>Enter text in <u>Marathi/Devnagari</u> and click on Convert button:</b><br/>
@@ -344,7 +343,7 @@ var info={
 <!-- Tab Buttons -->
 <div class="tab-buttons">
 	<button id="MarathiTyping" class="tab-btn active" onclick="openTab(event, 'tab1')">Type in Marathi</button>
-	<button id="EnglishTyping" class="tab-btn" onclick="openTab(event, 'tab2')">Type in English</button>
+	<button id="EnglishTyping" class="tab-btn" onclick="openTab(event, 'tab2')"><span class="blink_me">Type in English</span></button>
 </div>
 <div id="tab1" class="tab-content active">
 	<textarea id="txtBBtoModi" name="txtBBtoModi1" rows="3" cols="37" placeholder="मराठी मधे टाईप करा. (Please type in Marathi.)"></textarea>
@@ -410,25 +409,11 @@ email: modinikam@gmail.com</p>
 		document.getElementById(tabId).classList.add("active");
 		event.currentTarget.classList.add("active");
 	}
-</script>
 
-<script>
-    let backspaceflag = 0;
     let pasteflag = 0;
-    let lastValue = "";  //to detect backspace on mobile
+	let lastValue = "";  //to detect backspace on mobile
     const divoptionscontainer = document.getElementById("divoptionscontainer");
     const transliterateTextBox = document.getElementById('transliterateTextBox');
-    const divoutput = document.getElementById('divoutput');
-    
-    transliterateTextBox.addEventListener("keydown", function(event) {
-      if (event.key === "Backspace") {
-          // document.getElementById("transliterateTextBox").value = "Backspace was pressed!";
-          backspaceflag = 1;
-      } else {
-          // document.getElementById("transliterateTextBox").value = "";
-          backspaceflag = 0;
-      }
-    });
 
     transliterateTextBox.addEventListener("paste", function(event) {
         pasteflag = 1;
@@ -440,12 +425,12 @@ email: modinikam@gmail.com</p>
     });
 
     transliterateTextBox.addEventListener('input', function(event) {
-      if(backspaceflag == 1 || transliterateTextBox.value.length < lastValue.length) {
-        // Remove last character manually
-        divoutput.innerText = transliterateTextBox.value; //divoutput.innerText.slice(0, -1);
-        // return;
-      }
-      lastValue = this.value; 
+		if(transliterateTextBox.value.length < lastValue.length) { //backspace
+
+			lastValue = this.value; 
+			return;
+		}
+	  lastValue = this.value; 
       var text = this.value;
 
       if( pasteflag == 1) {
@@ -455,10 +440,8 @@ email: modinikam@gmail.com</p>
           .then(response => response.json())
           .then(data => {
             var transliteratedText = data[1][0][1][0];
-            // document.getElementById('outputTextBox').textContent = transliteratedText;
             divoptionscontainer.innerHTML = "";
-            divoutput.textContent = transliteratedText
-            transliterateTextBox.value = divoutput.textContent; 
+            transliterateTextBox.value = transliteratedText; 
           })
         .catch(error => console.error('Error:', error));
         console.log(text);
@@ -470,9 +453,11 @@ email: modinikam@gmail.com</p>
       let split = text.replace("\n"," ").split(" ");
       // console.log(split, split.length)
       // console.log(split[split.length-1])
-      let querytext = split[split.length-1];
-      if (querytext.trim().length > 0) {
+      let lastchar = split[split.length-1]; //get last word
+      if (lastchar.trim().length > 0) //space
+	  {
       // if (querytext != " ") { 
+		querytext = lastchar; //split[split.length-2]
         var url = 'https://www.google.com/inputtools/request?text=' + encodeURIComponent(querytext) + '&ime=transliteration_en_mr&num=5';
         
         fetch(url)
@@ -480,53 +465,49 @@ email: modinikam@gmail.com</p>
           .then(data => {
 
             add_opptions(data);
-            append_trans_text(data[1][0][1][0]);
+            //append_trans_text(data[1][0][1][0]);
 
           })
           .catch(error => console.error('Error:', error));
       } else {
-        divoptionscontainer.innerHTML = "";
-        if(backspaceflag) {
-          divoutput.textContent = divoutput.textContent;
-        }
-        else {
-          // if (transliterateTextBox.value.startsWith(divoutput.textContent)) //if copy pasted
-            divoutput.textContent = divoutput.textContent + " ";
-          // else
-          //   divoutput.textContent = transliterateTextBox.value;
-        }
-        transliterateTextBox.value = divoutput.textContent; 
-      }
+		if(document.getElementById('optionbtn1')) {
+			document.getElementById('optionbtn1').click();
+		}
+	  }
     });
 
     function append_trans_text(transliteratedText) {
       //var transliteratedText = data[1][0][1][0];
       // console.log(transliteratedText);
-      let existingtext = divoutput.textContent;
+      let existingtext = transliterateTextBox.value;
       let existingtextsplit = existingtext.split(" ");
       let existingtextlastword = existingtextsplit[existingtextsplit.length-1];
-      
-      existingtextsplit[existingtextsplit.length-1] = transliteratedText;
-      divoutput.textContent =  existingtextsplit.join(" ");
+      if(existingtextlastword == "") {
+		existingtextsplit[existingtextsplit.length-2] = transliteratedText;
+		transliterateTextBox.value =  existingtextsplit.join(" ");
+	  } else {
+      	existingtextsplit[existingtextsplit.length-1] = transliteratedText;
+		  transliterateTextBox.value =  existingtextsplit.join(" ") + " ";
+	  }
       // console.log(existingtextsplit);            
     }
 
     function add_opptions(data) {      
       let options = data[1][0][1];
       divoptionscontainer.innerHTML = "";
+	  let i=1;
       for (let option of options) {
           // console.log(option);
           let newButton = document.createElement("button");
           newButton.innerHTML = option;
           newButton.style.margin = "5px";
+		  newButton.id = "optionbtn" + i++;
           newButton.onclick = function() {
               // alert("You clicked " + newButton.innerHTML);
-              transliterateTextBox.value += " "; 
-              transliterateTextBox.focus();
-              append_trans_text(newButton.innerHTML + " ");
-              
+            //   transliterateTextBox.value += " "; 
+              append_trans_text(newButton.innerHTML);
               divoptionscontainer.innerHTML = "";
-              transliterateTextBox.value = divoutput.textContent; 
+              transliterateTextBox.focus();
           };
 
           // Append the button to the container
