@@ -101,6 +101,33 @@ h3 { text-align: center; padding: 0.1em; margin: 0;}
 	border: 1px solid gray;
 }
 
+/* Tab buttons */
+.tab-buttons {
+	display: flex;
+	gap: 5px;
+	margin-bottom: 10px;
+}
+.tab-buttons button {
+	flex: 1;
+	padding: 10px;
+	cursor: pointer;
+	border: none;
+	background: #ddd;
+}
+.tab-buttons button.active {
+	background: #007bff;
+	color: white;
+}
+
+/* Tab content */
+.tab-content {
+	display: none;
+}
+.tab-content.active {
+	display: block;
+}
+		
+
 </style>
 <meta name="viewport" content="width=device-width">
 <script>
@@ -159,7 +186,17 @@ function fnParse_mtext(val) {
 
 function fntype(e){
 	//alert(e.value);
-	text = document.getElementById('txtBBtoModi').value;
+	let btnid = "";
+	document.querySelectorAll(".tab-btn").forEach(btn => {
+			if(btn.classList.contains("active"))
+				btnid = btn.id;
+			// console.log(btn.classList.contains("active"));
+		});
+	if(btnid == "MarathiTyping")
+		text = document.getElementById('txtBBtoModi').value; //transliterateTextBox  depending on which tab is active
+	else 
+		text = document.getElementById('transliterateTextBox').value; //transliterateTextBox  depending on which tab is active
+	console.log(text);
 	var val = "";
 	if(text.trim() == "") { alert("Please enter Devnagari/Marathi text -> convert to Modi -> and then click Export.") }
 	else { 
@@ -279,19 +316,6 @@ var info={
 <div style="display: flex;">
 <div><img style="margin-top: 1em; min-width: 100px;" src="ModiNikam-Logo-tl.png" title="ModiNikam" alt="ModiNikam - Convert Devnagari to Modi Lipi" width="137" height="120"/></div>
 <div><h2 style="margin: 1em;">Marathi (Devnagari) to Modi Lipi - मराठी बाळबोध (देवनागरी) ते मोडी लिपी</h2>
-	<center>
-		<style>
-			.WordClockWidget {
-				border: 0.1em solid black;
-				border-radius: 0.5em;
-				width: 95%;
-				font-weight:bold;
-				font-size: small;
-			}
-		</style>
-		<div id="MarathiClockWidget"></div>
-		<script src="https://cdn.jsdelivr.net/gh/nikhemant/RegionalWordClock@main/widget/WordClockWidget.js" data-lang="mr" data-elemid="MarathiClockWidget" data-css="inline"></script>
-	</center>
 </div>
 </div>
 <!--	<h2><u><a class="blink_me" href="https://modinikam.com/news.html" title="Latest news in Modi Lipi">📰 वाचा ताज्या ठळक बातम्या मोडी लिपी मधे 📰</a></u></h2>-->
@@ -299,11 +323,23 @@ var info={
 <u><a class="" href="./modilipi_information.html" title="About Modi Lipi">About ModiLipi</a></u>		&nbsp;&nbsp;&nbsp;
 <u><a class="" href="./news.html" title="Latest news in Modi Lipi">News in ModiLipi</a></u>		&nbsp;&nbsp;&nbsp;
 <u><a class="" href="./status.html" title="Whatsapp Status in Modi Lipi">Whatsapp status in ModiLipi</a></u>
-<u><a class="blink_me" href="https://forte24.in/products/modi-lipi-t-shirt?ta_aff=YB7CIIWLUK" target="_blank" title="Buy Official ModiNikam Merchandise!" id="dialog-trigger">Buy Official ModiNikam Merchandise!</a></u>
 <hr/>
 <!-- <input type="text" id="txtBBtoModi1" name="txtBBtoModi1"> -->
 <b>Enter text in <u>Marathi/Devnagari</u> and click on Convert button:</b><br/>
-<textarea id="txtBBtoModi" name="txtBBtoModi1" rows="3" cols="37" placeholder="मराठी मधे टाईप करा. (Please type in Marathi.)"></textarea>
+
+<!-- Tab Buttons -->
+<div class="tab-buttons" style="padding: 0px; margin: 0px;">
+	<button id="EnglishTyping" class="tab-btn active" style="padding: 5px; margin: 3px 0px 2px 0px; width: 20px;" onclick="openTab(event, 'tab2')"><span class="blink_me">Type in English</span></button>
+	<button id="MarathiTyping" class="tab-btn" style="padding: 5px; margin:  3px 0px 2px 0px;" onclick="openTab(event, 'tab1')">Type in Marathi</button>
+</div>
+<div id="tab1" class="tab-content">
+	<textarea id="txtBBtoModi" name="txtBBtoModi1" rows="3" cols="37" placeholder="मराठी मधे टाईप करा. (Please type in Marathi.)"></textarea>
+</div>
+<div id="tab2" class="tab-content active">
+	<textarea id="transliterateTextBox" name="transliterateTextBox" rows="3" cols="37" placeholder="English will be converted to Marathi."></textarea>
+	<div id="divoptionscontainer"></div>
+	<div id="divoutput" style="width: 10px; height: 10px; display: none;"></div>
+</div>
 
 <div class="row">
 <input type="button" value="Convert to Modi Lipi" class="btn" onclick="fntype(this)"/>
@@ -343,6 +379,129 @@ email: modinikam@gmail.com</p>
 
 
 <br/>
+
+<script>
+	function openTab(event, tabId) {
+		// Hide all tab contents
+		document.querySelectorAll(".tab-content").forEach(tab => {
+			tab.classList.remove("active");
+		});
+
+		// Remove active class from all buttons
+		document.querySelectorAll(".tab-btn").forEach(btn => {
+			btn.classList.remove("active");
+		});
+
+		// Show selected tab and highlight button
+		document.getElementById(tabId).classList.add("active");
+		event.currentTarget.classList.add("active");
+	}
+
+    let pasteflag = 0;
+	let lastValue = "";  //to detect backspace on mobile
+    const divoptionscontainer = document.getElementById("divoptionscontainer");
+    const transliterateTextBox = document.getElementById('transliterateTextBox');
+
+    transliterateTextBox.addEventListener("paste", function(event) {
+        pasteflag = 1;
+        // Get clipboard data
+        let pasteData = event.clipboardData.getData("text");
+        // Display the pasted text
+        // document.getElementById("pastedText").textContent = pasteData;
+        console.log("Pasted content:", pasteData);
+    });
+
+    transliterateTextBox.addEventListener('input', function(event) {
+		if(transliterateTextBox.value.length < lastValue.length) { //backspace
+
+			lastValue = this.value; 
+			return;
+		}
+	  lastValue = this.value; 
+      var text = this.value;
+
+      if( pasteflag == 1) {
+        //do full transliterate and return     
+        var url = 'https://www.google.com/inputtools/request?text=' + encodeURIComponent(text) + '&ime=transliteration_en_mr&num=1';
+        fetch(url)
+          .then(response => response.json())
+          .then(data => {
+            var transliteratedText = data[1][0][1][0];
+            divoptionscontainer.innerHTML = "";
+            transliterateTextBox.value = transliteratedText; 
+          })
+        .catch(error => console.error('Error:', error));
+        console.log(text);
+        pasteflag = 0;
+        return;
+      }
+
+
+      let split = text.replace("\n"," ").split(" ");
+      // console.log(split, split.length)
+      // console.log(split[split.length-1])
+      let lastchar = split[split.length-1]; //get last word
+      if (lastchar.trim().length > 0) //space
+	  {
+      // if (querytext != " ") { 
+		querytext = lastchar; //split[split.length-2]
+        var url = 'https://www.google.com/inputtools/request?text=' + encodeURIComponent(querytext) + '&ime=transliteration_en_mr&num=5';
+        
+        fetch(url)
+          .then(response => response.json())
+          .then(data => {
+
+            add_opptions(data);
+            //append_trans_text(data[1][0][1][0]);
+
+          })
+          .catch(error => console.error('Error:', error));
+      } else {
+		if(document.getElementById('optionbtn1')) {
+			document.getElementById('optionbtn1').click();
+		}
+	  }
+    });
+
+    function append_trans_text(transliteratedText) {
+      //var transliteratedText = data[1][0][1][0];
+      // console.log(transliteratedText);
+      let existingtext = transliterateTextBox.value;
+      let existingtextsplit = existingtext.split(" ");
+      let existingtextlastword = existingtextsplit[existingtextsplit.length-1];
+      if(existingtextlastword == "") {
+		existingtextsplit[existingtextsplit.length-2] = transliteratedText;
+		transliterateTextBox.value =  existingtextsplit.join(" ");
+	  } else {
+      	existingtextsplit[existingtextsplit.length-1] = transliteratedText;
+		  transliterateTextBox.value =  existingtextsplit.join(" ") + " ";
+	  }
+      // console.log(existingtextsplit);            
+    }
+
+    function add_opptions(data) {      
+      let options = data[1][0][1];
+      divoptionscontainer.innerHTML = "";
+	  let i=1;
+      for (let option of options) {
+          // console.log(option);
+          let newButton = document.createElement("button");
+          newButton.innerHTML = option;
+          newButton.style.margin = "5px";
+		  newButton.id = "optionbtn" + i++;
+          newButton.onclick = function() {
+              // alert("You clicked " + newButton.innerHTML);
+            //   transliterateTextBox.value += " "; 
+              append_trans_text(newButton.innerHTML);
+              divoptionscontainer.innerHTML = "";
+              transliterateTextBox.focus();
+          };
+
+          // Append the button to the container
+          divoptionscontainer.appendChild(newButton);
+      }
+    }
+  </script>
 
 </body>
 </html>
