@@ -316,19 +316,6 @@ var info={
 <div style="display: flex;">
 <div><img style="margin-top: 1em; min-width: 100px;" src="ModiNikam-Logo-tl.png" title="ModiNikam" alt="ModiNikam - Convert Devnagari to Modi Lipi" width="137" height="120"/></div>
 <div><h2 style="margin: 1em;">Marathi (Devnagari) to Modi Lipi - मराठी बाळबोध (देवनागरी) ते मोडी लिपी</h2>
-	<center>
-		<style>
-			.WordClockWidget {
-				border: 0.1em solid black;
-				border-radius: 0.5em;
-				width: 95%;
-				font-weight:bold;
-				font-size: small;
-			}
-		</style>
-		<div id="MarathiClockWidget"></div>
-		<script src="https://cdn.jsdelivr.net/gh/nikhemant/RegionalWordClock@main/widget/WordClockWidget.js" data-lang="mr" data-elemid="MarathiClockWidget" data-css="inline"></script>
-	</center>
 </div>
 </div>
 <!--	<h2><u><a class="blink_me" href="https://modinikam.com/news.html" title="Latest news in Modi Lipi">📰 वाचा ताज्या ठळक बातम्या मोडी लिपी मधे 📰</a></u></h2>-->
@@ -341,14 +328,14 @@ var info={
 <b>Enter text in <u>Marathi/Devnagari</u> and click on Convert button:</b><br/>
 
 <!-- Tab Buttons -->
-<div class="tab-buttons">
-	<button id="MarathiTyping" class="tab-btn active" onclick="openTab(event, 'tab1')">Type in Marathi</button>
-	<button id="EnglishTyping" class="tab-btn" onclick="openTab(event, 'tab2')"><span class="blink_me">Type in English</span></button>
+<div class="tab-buttons" style="padding: 0px; margin: 0px;">
+	<button id="EnglishTyping" class="tab-btn active" style="padding: 5px; margin: 3px 0px 2px 0px; width: 20px;" onclick="openTab(event, 'tab2')"><span class="blink_me">Type in English</span></button>
+	<button id="MarathiTyping" class="tab-btn" style="padding: 5px; margin:  3px 0px 2px 0px;" onclick="openTab(event, 'tab1')">Type in Marathi</button>
 </div>
-<div id="tab1" class="tab-content active">
+<div id="tab1" class="tab-content">
 	<textarea id="txtBBtoModi" name="txtBBtoModi1" rows="3" cols="37" placeholder="मराठी मधे टाईप करा. (Please type in Marathi.)"></textarea>
 </div>
-<div id="tab2" class="tab-content">
+<div id="tab2" class="tab-content active">
 	<textarea id="transliterateTextBox" name="transliterateTextBox" rows="3" cols="37" placeholder="English will be converted to Marathi."></textarea>
 	<div id="divoptionscontainer"></div>
 	<div id="divoutput" style="width: 10px; height: 10px; display: none;"></div>
