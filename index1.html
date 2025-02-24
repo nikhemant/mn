@@ -194,6 +194,8 @@ function fntype(e){
 		});
 	if(btnid == "MarathiTyping")
 		text = document.getElementById('txtBBtoModi').value; //transliterateTextBox  depending on which tab is active
+	else if(btnid == "VoiceTyping")
+		text = document.getElementById('VoicetransliterateTextBox').value; //transliterateTextBox  depending on which tab is active
 	else 
 		text = document.getElementById('transliterateTextBox').value; //transliterateTextBox  depending on which tab is active
 	console.log(text);
@@ -331,6 +333,7 @@ var info={
 <div class="tab-buttons" style="padding: 0px; margin: 0px;">
 	<button id="EnglishTyping" class="tab-btn active" style="padding: 5px; margin: 3px 0px 2px 0px; width: 20px;" onclick="openTab(event, 'tab2')"><span class="blink_me">Type in English</span></button>
 	<button id="MarathiTyping" class="tab-btn" style="padding: 5px; margin:  3px 0px 2px 0px;" onclick="openTab(event, 'tab1')">Type in Marathi</button>
+	<button id="VoiceTyping" class="tab-btn" style="padding: 5px; margin: 3px 0px 2px 0px; width: 20px;" onclick="openTab(event, 'tab3')"><span class="blink_me">Voice Typing</span></button>
 </div>
 <div id="tab1" class="tab-content">
 	<textarea id="txtBBtoModi" name="txtBBtoModi1" rows="3" cols="37" placeholder="मराठी मधे टाईप करा. (Please type in Marathi.)"></textarea>
@@ -338,7 +341,9 @@ var info={
 <div id="tab2" class="tab-content active">
 	<textarea id="transliterateTextBox" name="transliterateTextBox" rows="3" cols="37" placeholder="English will be converted to Marathi."></textarea>
 	<div id="divoptionscontainer"></div>
-	<div id="divoutput" style="width: 10px; height: 10px; display: none;"></div>
+</div>
+<div id="tab3" class="tab-content">
+	<textarea id="VoicetransliterateTextBox" name="VoicetransliterateTextBox" rows="3" cols="37" placeholder="Allow mic access and Speak.."></textarea>
 </div>
 
 <div class="row">
@@ -401,6 +406,7 @@ email: modinikam@gmail.com</p>
 	let lastValue = "";  //to detect backspace on mobile
     const divoptionscontainer = document.getElementById("divoptionscontainer");
     const transliterateTextBox = document.getElementById('transliterateTextBox');
+	const VoicetransliterateTextBox = document.getElementById("VoicetransliterateTextBox");
 
     transliterateTextBox.addEventListener("paste", function(event) {
         pasteflag = 1;
@@ -502,6 +508,37 @@ email: modinikam@gmail.com</p>
       }
     }
   </script>
+
+  
+<script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/0.7.2/p5.min.js"></script>
+<script src="https://cdn.jsdelivr.net/gh/IDMNYU/p5.js-speech@0.0.3/lib/p5.speech.js"></script>
+<script>
+
+var speechRec = new p5.SpeechRec(); // speech recognition object (will prompt for mic access)
+speechRec.onResult = function () { // bind callback function to trigger when speech is recognized
+	VoicetransliterateTextBox.value = speechRec.resultString;
+  text = speechRec.resultString;
+  VoicetransliterateTextBox.dispatchEvent(new KeyboardEvent('input'));
+  speechRec.stop();
+  //transliterate
+  var url = 'https://www.google.com/inputtools/request?text=' + encodeURIComponent(text) + '&ime=transliteration_en_mr&num=1';
+	fetch(url)
+		.then(response => response.json())
+		.then(data => {
+		var transliteratedText = data[1][0][1][0];
+		VoicetransliterateTextBox.value = transliteratedText; 
+		})
+	.catch(error => console.error('Error:', error));
+}
+
+document.querySelector("#VoiceTyping").addEventListener("click", function() {
+	VoicetransliterateTextBox.value = "";
+  console.log("in start");
+  speechRec.start();
+  //document.getElementById("VoicetransliterateTextBox").placeholder = "Speak Now...";
+});
+
+</script>
 
 </body>
 </html>
