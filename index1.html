@@ -133,7 +133,7 @@ h3 { text-align: center; padding: 0.1em; margin: 0;}
 <script>
 
 //https://modinikam.nikhemant.workers.dev/?d=देवनागरी
-async function BB_to_Modi(dtext){
+async function BB_to_Modi(dtext, btnid){
 	let url = "https://modinikam.nikhemant.workers.dev/?d="
 	url = url + encodeURIComponent(dtext.trim());
     const response = await fetch(url,{mode: 'cors'});
@@ -164,7 +164,7 @@ async function BB_to_Modi(dtext){
 		document.querySelector("#btnExportAsImage").style.visibility = "visible"; 
 	}
 	fnCreateScreenShotForExport();
-	fnPost(dtext, val.mtext, val.cf);
+	fnPost(dtext, val.mtext, val.cf, btnid);
 	return val.mtext;
 }
 
@@ -202,7 +202,7 @@ function fntype(e){
 	var val = "";
 	if(text.trim() == "") { alert("Please enter Devnagari/Marathi text -> convert to Modi -> and then click Export.") }
 	else { 
-		val = BB_to_Modi(text); 		
+		val = BB_to_Modi(text, btnid); 		
 	}
 }
 
@@ -251,7 +251,7 @@ function fnCreateStatusRedirect() {
 	window.location.href = link;
 }
 
-function fnPost(seltext, mtext, cfinfo) {
+function fnPost(seltext, mtext, cfinfo, btnid) {
 	cinfo = fn_GetClientInfo();
 	var cinfo_jsons = new Array();
 	cinfo_jsons.push(JSON.stringify(cfinfo));
@@ -265,7 +265,7 @@ function fnPost(seltext, mtext, cfinfo) {
 	//alert(info);
 	//let glink = "https://docs.google.com/forms/d/e/1FAIpQLSdNrUSqCv-diiabGHxE-hCnDGxjWoUKZq0Yp4PIJwQ0t3Wa-g/formResponse?entry.651182113=test1110&entry.379875292=test111&emailAddress=test111%40test.com"
 	let glink = "https://docs.google.com/forms/d/e/1FAIpQLSdNrUSqCv-diiabGHxE-hCnDGxjWoUKZq0Yp4PIJwQ0t3Wa-g/formResponse?"
-	glink = glink + "entry.651182113=" + seltext + "&entry.379875292=" + "temp" + "&emailAddress=" + cfinfo.city.replace(" ", "") + '@modinikam.com'
+	glink = glink + "entry.651182113=" + seltext + "&entry.379875292=" + "temp" + "&emailAddress=" + cfinfo.city.replace(" ", "") + '@' + btnid
 	try{
 		fetch(glink, {
 			method: 'POST',
