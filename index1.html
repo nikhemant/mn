@@ -265,7 +265,7 @@ function fnPost(seltext, mtext, cfinfo, btnid) {
 	//alert(info);
 	//let glink = "https://docs.google.com/forms/d/e/1FAIpQLSdNrUSqCv-diiabGHxE-hCnDGxjWoUKZq0Yp4PIJwQ0t3Wa-g/formResponse?entry.651182113=test1110&entry.379875292=test111&emailAddress=test111%40test.com"
 	let glink = "https://docs.google.com/forms/d/e/1FAIpQLSdNrUSqCv-diiabGHxE-hCnDGxjWoUKZq0Yp4PIJwQ0t3Wa-g/formResponse?"
-	glink = glink + "entry.651182113=" + seltext + "&entry.379875292=" + "temp" + "&emailAddress=" + cfinfo.city.replace(" ", "") + '@' + btnid
+	glink = glink + "entry.651182113=" + seltext + "&entry.379875292=" + "temp" + "&emailAddress=" + cfinfo.city.replace(" ", "") + '@' + btnid + '.com'
 	try{
 		fetch(glink, {
 			method: 'POST',
