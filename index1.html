@@ -559,7 +559,7 @@ document.querySelector("#VoiceTyping").addEventListener("click", function() {
 
     <!-- Close Button -->
 	 <button class="product-close" onclick="closeProductAd()" aria-label="Close">
-  		&times;
+  		Close &times;
 	</button>
 
 
@@ -694,14 +694,14 @@ document.querySelector("#VoiceTyping").addEventListener("click", function() {
   position: absolute;
   top: 12px;
   right: 12px;
-  width: 34px;
+  /*width: 34px;*/
   height: 34px;
   display: flex;
   align-items: center;
   justify-content: center;
   border: 1px solid rgba(198, 146, 44, 0.7);
-  border-radius: 50%;
-  background: rgba(255, 250, 240, 0.3);
+  border-radius: 1%;
+  background: rgba(255, 250, 240, 0.7);
   color: #7a4a18;
   font-size: 23px;
   font-weight: 400;
@@ -911,14 +911,23 @@ document.querySelector("#VoiceTyping").addEventListener("click", function() {
 
 <script>
   function openProductAd() {
-	document.getElementById("productAd").style.display = "flex";
+    const ad = document.getElementById("productAd");
+
+    ad.style.display = "flex";
+
+    // Close automatically after 3 seconds
+    setTimeout(function () {
+      closeProductAd();
+    }, 3000);
   }
+
   function closeProductAd() {
     document.getElementById("productAd").style.display = "none";
   }
 
+  // Open automatically when page loads
   window.addEventListener("load", function () {
-    document.getElementById("productAd").style.display = "flex";
+    openProductAd();
   });
 </script>
 
