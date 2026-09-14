@@ -330,7 +330,7 @@ var info={
     title="Buy - Chhatrapati Shivaji Maharaj Photo Frame with Modi Lipi name"
     onclick="openProductAd(); return false;"
   >
-    Maharaj - ModiLipi Photo Frame
+    <sup><i>[Buy Now]</i></sup> Maharaj - Modi Lipi Photo Frame
   </a>
 </u>
 &nbsp;&nbsp;&nbsp;
@@ -344,9 +344,9 @@ var info={
 
 <!-- Tab Buttons -->
 <div class="tab-buttons" style="padding: 0px; margin: 0px;">
-	<button id="EnglishTyping" class="tab-btn active" style="padding: 5px; margin: 3px 0px 2px 0px; width: 20px;" onclick="openTab(event, 'tab2')"><span class="blink_me">Type in English</span></button>
+	<button id="EnglishTyping" class="tab-btn active" style="padding: 5px; margin: 3px 0px 2px 0px; width: 20px;" onclick="openTab(event, 'tab2')"><span class="">Type in English</span></button>
 	<button id="MarathiTyping" class="tab-btn" style="padding: 5px; margin:  3px 0px 2px 0px;" onclick="openTab(event, 'tab1')">Type in Marathi</button>
-	<button id="VoiceTyping" class="tab-btn" style="padding: 5px; margin: 3px 0px 2px 0px; width: 20px;" onclick="openTab(event, 'tab3')"><span class="blink_me">Voice Typing</span></button>
+	<button id="VoiceTyping" class="tab-btn" style="padding: 5px; margin: 3px 0px 2px 0px; width: 20px;" onclick="openTab(event, 'tab3')"><span class="">Voice Typing</span></button>
 </div>
 <div id="tab1" class="tab-content">
 	<textarea id="txtBBtoModi" name="txtBBtoModi1" rows="3" cols="37" placeholder="मराठी मधे टाईप करा. (Please type in Marathi.)"></textarea>
@@ -911,23 +911,21 @@ document.querySelector("#VoiceTyping").addEventListener("click", function() {
 
 <script>
   function openProductAd() {
-    const ad = document.getElementById("productAd");
-
-    ad.style.display = "flex";
-
-    // Close automatically after 3 seconds
-    setTimeout(function () {
-      closeProductAd();
-    }, 3000);
+    document.getElementById("productAd").style.display = "flex";
   }
 
   function closeProductAd() {
     document.getElementById("productAd").style.display = "none";
   }
 
-  // Open automatically when page loads
+  // Automatically open on startup
   window.addEventListener("load", function () {
     openProductAd();
+
+    // Close ONLY the startup popup after 3 seconds
+    setTimeout(function () {
+      closeProductAd();
+    }, 5000);
   });
 </script>
 
