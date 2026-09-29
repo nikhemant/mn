@@ -585,6 +585,7 @@ document.querySelector("#VoiceTyping").addEventListener("click", function() {
         class="product-buy"
         target="_blank"
         rel="noopener noreferrer"
+        onclick="trackProductClick('top')"
       >
         🚩 आजच आपली फ्रेम ऑर्डर करा
       </a>
@@ -627,6 +628,7 @@ document.querySelector("#VoiceTyping").addEventListener("click", function() {
         class="product-buy"
         target="_blank"
         rel="noopener noreferrer"
+        onclick="trackProductClick('bottom')"
       >
         🚩 आजच आपली फ्रेम ऑर्डर करा
       </a>
@@ -938,6 +940,17 @@ document.querySelector("#VoiceTyping").addEventListener("click", function() {
       closeProductAd();
     }, 5000);
   });
+
+  function trackProductClick(position) {
+    if (typeof gtag === "function") {
+        gtag("event", "product_order_click", {
+        button_position: position,
+        product_name: "Chhatrapati Shivaji Maharaj Photo Frame",
+        price: 399
+        });
+    }
+  }
+
 </script>
 
 
